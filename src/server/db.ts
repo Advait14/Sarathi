@@ -102,36 +102,40 @@ export interface DatabaseSchema {
   sessions: SessionRecord[];
 }
 
+import seedData from "./data/db.json";
+
+// In-memory store initialized with seed data for serverless/read-only environments
+let inMemoryDb: DatabaseSchema = JSON.parse(JSON.stringify(seedData));
+
 const DB_PATH = path.join(process.cwd(), "src", "server", "data", "db.json");
 
 /**
- * Read the entire database from JSON file
+ * Read the entire database safely with memory fallback
  */
 export function getDatabase(): DatabaseSchema {
   try {
-    if (!fs.existsSync(DB_PATH)) {
-      throw new Error(`Database file not found at ${DB_PATH}`);
+    if (typeof process !== "undefined" && fs.existsSync && fs.existsSync(DB_PATH)) {
+      const raw = fs.readFileSync(DB_PATH, "utf-8");
+      inMemoryDb = JSON.parse(raw) as DatabaseSchema;
     }
-    const raw = fs.readFileSync(DB_PATH, "utf-8");
-    return JSON.parse(raw) as DatabaseSchema;
-  } catch (error) {
-    console.error("Error reading db.json:", error);
-    throw error;
+  } catch {
+    // In serverless / read-only filesystem, use in-memory database
   }
+  return inMemoryDb;
 }
 
 /**
- * Atomically write database to JSON file
+ * Atomically write database to JSON file with safe serverless fallback
  */
 export function saveDatabase(data: DatabaseSchema): void {
+  inMemoryDb = data;
   try {
     const jsonString = JSON.stringify(data, null, 2);
     const tempPath = `${DB_PATH}.tmp`;
     fs.writeFileSync(tempPath, jsonString, "utf-8");
     fs.renameSync(tempPath, DB_PATH);
-  } catch (error) {
-    console.error("Error writing db.json:", error);
-    throw error;
+  } catch {
+    // On Vercel / serverless read-only filesystem: state persists in memory during function life
   }
 }
 
