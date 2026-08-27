@@ -1,0 +1,209 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* ==========================================================================
+     Color Tokens — Civic, Calm, Trustworthy
+     ========================================================================== */
+
+  /* Neutral Base & Ink */
+  --color-ink: #0f172a;
+  --color-text: #1e293b;
+  --color-muted: #475569;
+  --color-subtle: #64748b;
+  
+  /* Surfaces & Canvas */
+  --color-canvas: #f8f9fa;
+  --color-surface: #ffffff;
+  --color-surface-subtle: #f8fafc;
+  --color-surface-muted: #f1f5f9;
+
+  /* Borders */
+  --color-border: #e2e8f0;
+  --color-border-strong: #94a3b8;
+  --color-border-subtle: #f1f5f9;
+
+  /* Primary (Deep Navy / Indigo) — for primary actions, header, key structure */
+  --color-primary: #1e3a8a;
+  --color-primary-hover: #172554;
+  --color-primary-active: #0f172a;
+  --color-primary-soft: #eff6ff;
+  --color-primary-border: #bfdbfe;
+  --color-primary-text: #1e3a8a;
+
+  /* Accent (Civic Blue) — for active journey steps, focus, key links */
+  --color-accent: #2563eb;
+  --color-accent-hover: #1d4ed8;
+  --color-accent-active: #1e40af;
+  --color-accent-soft: #eff6ff;
+  --color-accent-border: #bfdbfe;
+  --color-accent-text: #1d4ed8;
+
+  /* Semantic State: Success (Completed / Verified / Confirmed) */
+  --color-success: #15803d;
+  --color-success-hover: #166534;
+  --color-success-soft: #f0fdf4;
+  --color-success-border: #bbf7d0;
+  --color-success-text: #14532d;
+
+  /* Semantic State: Warning / Waiting / Attention (Eligibility / In-Review) */
+  --color-warning: #b45309;
+  --color-warning-hover: #92400e;
+  --color-warning-soft: #fffbeb;
+  --color-warning-border: #fde68a;
+  --color-warning-text: #78350f;
+
+  /* Semantic State: Danger / Blocked / Error (Missing Prerequisite / Blocked) */
+  --color-danger: #b91c1c;
+  --color-danger-hover: #991b1b;
+  --color-danger-soft: #fef2f2;
+  --color-danger-border: #fecaca;
+  --color-danger-text: #7f1d1d;
+
+  /* Semantic State: Info (Contextual guidance) */
+  --color-info: #1d4ed8;
+  --color-info-hover: #1e40af;
+  --color-info-soft: #eff6ff;
+  --color-info-border: #bfdbfe;
+  --color-info-text: #1e3a8a;
+
+  /* Focus & Accessibility */
+  --color-focus: #2563eb;
+  --focus-ring: 0 0 0 3px rgba(37, 99, 235, 0.35);
+  --focus-offset: 2px;
+
+  /* ==========================================================================
+     Typography Tokens
+     ========================================================================== */
+  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  
+  --text-display: clamp(1.875rem, 3.5vw, 2.5rem);
+  --text-title: 1.75rem;
+  --text-heading: 1.5rem;
+  --text-section: 1.25rem;
+  --text-subsection: 1.125rem;
+  --text-body-large: 1.125rem;
+  --text-body: 1rem;
+  --text-body-small: 0.875rem;
+  --text-label: 0.875rem;
+  --text-caption: 0.75rem;
+
+  --line-tight: 1.2;
+  --line-normal: 1.5;
+  --line-relaxed: 1.625;
+
+  /* ==========================================================================
+     Spacing Tokens (8px scale with 4px base)
+     ========================================================================== */
+  --space-1: 0.25rem;  /* 4px */
+  --space-2: 0.5rem;   /* 8px */
+  --space-3: 0.75rem;  /* 12px */
+  --space-4: 1rem;     /* 16px */
+  --space-5: 1.25rem;  /* 20px */
+  --space-6: 1.5rem;   /* 24px */
+  --space-8: 2rem;     /* 32px */
+  --space-10: 2.5rem;  /* 40px */
+  --space-12: 3rem;    /* 48px */
+  --space-16: 4rem;    /* 64px */
+  --space-20: 5rem;    /* 80px */
+
+  /* ==========================================================================
+     Radii Tokens (Restrained, Civic — no excessive rounded cards)
+     ========================================================================== */
+  --radius-xs: 0.25rem;   /* 4px */
+  --radius-sm: 0.375rem;  /* 6px */
+  --radius-md: 0.5rem;    /* 8px */
+  --radius-lg: 0.75rem;   /* 12px */
+  --radius-card: var(--radius-md);
+  --radius-button: var(--radius-sm);
+  --radius-badge: var(--radius-sm);
+
+  /* ==========================================================================
+     Shadows (Subtle, Restrained Elevation)
+     ========================================================================== */
+  --shadow-sm: 0 1px 2px 0 rgba(15, 23, 42, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(15, 23, 42, 0.07), 0 2px 4px -2px rgba(15, 23, 42, 0.05);
+  --shadow-card: var(--shadow-sm);
+
+  /* ==========================================================================
+     Borders
+     ========================================================================== */
+  --border-width: 1px;
+  --border-width-thick: 2px;
+}
+
+/* ==========================================================================
+   Base Styles & Reset
+   ========================================================================== */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-height: 100%;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  background-color: var(--color-canvas);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  font-size: var(--text-body);
+  line-height: var(--line-normal);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+button, input, textarea, select {
+  font: inherit;
+}
+
+/* Accessible Keyboard Focus Navigation */
+:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: var(--focus-offset);
+  box-shadow: var(--focus-ring);
+}
+
+::selection {
+  background-color: var(--color-primary-soft);
+  color: var(--color-ink);
+}
+
+/* Skip to Main Content Link (Visible only on Keyboard Focus) */
+.skip-to-content {
+  position: absolute;
+  top: -100%;
+  left: 1rem;
+  z-index: 100;
+  padding: 0.75rem 1.25rem;
+  background-color: var(--color-primary);
+  color: #ffffff;
+  font-size: var(--text-body-small);
+  font-weight: 700;
+  text-decoration: none;
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-md);
+  transition: top 0.2s ease-in-out;
+}
+
+.skip-to-content:focus {
+  top: 1rem;
+  outline: 3px solid #ffffff;
+  outline-offset: 2px;
+}
+
+/* Reduced Motion for Accessible Preferences */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

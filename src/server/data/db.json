@@ -1,0 +1,130 @@
+{
+  "users": [
+    {
+      "id": "usr_advait_01",
+      "name": "Advait Sharma",
+      "mobile": "9876543210",
+      "email": "advait.sharma@example.com",
+      "dlNumber": "DL-0420110023456",
+      "dateOfBirth": "15/08/1995",
+      "bloodGroup": "B+",
+      "fatherOrHusbandName": "Rajesh Sharma",
+      "registeredAddress": "B-4/122, Janakpuri, New Delhi - 110058",
+      "stateCode": "DL",
+      "rtoCode": "DL-04",
+      "rtoName": "RTO Janakpuri (West Delhi)"
+    },
+    {
+      "id": "usr_priya_02",
+      "name": "Priya Verma",
+      "mobile": "9811223344",
+      "email": "priya.verma@example.com",
+      "dlNumber": "DL-0420200099887",
+      "dateOfBirth": "22/11/1998",
+      "bloodGroup": "O+",
+      "fatherOrHusbandName": "Suresh Verma",
+      "registeredAddress": "C-2/45, Paschim Vihar, New Delhi - 110063",
+      "stateCode": "DL",
+      "rtoCode": "DL-04",
+      "rtoName": "RTO Janakpuri (West Delhi)"
+    }
+  ],
+  "licences": [
+    {
+      "dlNumber": "DL-0420110023456",
+      "userId": "usr_advait_01",
+      "holderName": "Advait Sharma",
+      "status": "Active",
+      "originalIssueDate": "15/08/2015",
+      "validityNonTransport": "14/08/2035",
+      "issuingAuthority": "Licensing Authority, RTO Janakpuri, West Delhi (DL-04)",
+      "existingClasses": [
+        {
+          "code": "LMV",
+          "name": "Light Motor Vehicle",
+          "issueDate": "15/08/2015",
+          "validUntil": "14/08/2035",
+          "status": "Active"
+        }
+      ],
+      "learnerLicences": [
+        {
+          "llNumber": "LL-0420260089123",
+          "covCode": "MCWG",
+          "covDescription": "Motorcycle With Gear",
+          "issueDate": "10/06/2026",
+          "validUntil": "09/12/2026",
+          "status": "Active",
+          "holdingDaysCompleted": 45,
+          "statutoryHoldingDaysRequired": 30,
+          "isHoldingPeriodComplete": true
+        }
+      ]
+    },
+    {
+      "dlNumber": "DL-0420200099887",
+      "userId": "usr_priya_02",
+      "holderName": "Priya Verma",
+      "status": "Active",
+      "originalIssueDate": "10/01/2020",
+      "validityNonTransport": "09/01/2040",
+      "issuingAuthority": "Licensing Authority, RTO Janakpuri, West Delhi (DL-04)",
+      "existingClasses": [
+        {
+          "code": "LMV",
+          "name": "Light Motor Vehicle",
+          "issueDate": "10/01/2020",
+          "validUntil": "09/01/2040",
+          "status": "Active"
+        }
+      ],
+      "learnerLicences": []
+    }
+  ],
+  "applications": [
+    {
+      "id": "app_mcwg_2048",
+      "applicationNumber": "SJ-MCWG-2048",
+      "userId": "usr_advait_01",
+      "dlNumber": "DL-0420110023456",
+      "serviceType": "Endorsement of Vehicle Class (Form 2)",
+      "requestedClass": "MCWG",
+      "linkedLLNumber": "LL-0420260089123",
+      "stage": 4,
+      "status": "under_review",
+      "officialPortalStatus": "APPROVAL OF LL BY LICENSING AUTHORITY",
+      "submissionDate": "2026-08-20T10:30:00.000Z",
+      "lastUpdated": "2026-08-27T11:20:00.000Z",
+      "feePaid": false,
+      "feeAmount": 850,
+      "feeTransactionId": null,
+      "appointment": {
+        "isBooked": false,
+        "date": null,
+        "timeSlot": null,
+        "trackName": "Automated Driving Test Track, RTO Janakpuri"
+      },
+      "history": [
+        {
+          "timestamp": "2026-08-20T10:30:00.000Z",
+          "action": "Application Submitted",
+          "actor": "Citizen (Advait Sharma)",
+          "details": "Form 2 endorsement application filed online with Aadhaar auth."
+        },
+        {
+          "timestamp": "2026-08-21T09:15:00.000Z",
+          "action": "Document Verification Queued",
+          "actor": "Parivahan System",
+          "details": "Linked MCWG LL verified against central registry."
+        },
+        {
+          "timestamp": "2026-08-27T11:20:00.000Z",
+          "action": "Under Review by Licensing Authority",
+          "actor": "Licensing Officer (DL-04)",
+          "details": "Application in review queue for endorsement approval."
+        }
+      ]
+    }
+  ],
+  "sessions": []
+}
