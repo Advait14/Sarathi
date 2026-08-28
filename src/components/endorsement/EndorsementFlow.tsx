@@ -13,7 +13,7 @@ import { StepConfirmLicence } from "./StepConfirmLicence";
 import { StepConfirmAddress } from "./StepConfirmAddress";
 import { StepSelectClass } from "./StepSelectClass";
 import { StepDeclaration } from "./StepDeclaration";
-import { StepSubmission } from "./StepSubmission";
+import { StepReviewCheckpoint } from "./StepReviewCheckpoint";
 import { StepPayment } from "./StepPayment";
 import { StepAppointment } from "./StepAppointment";
 import { StepTestConfirmed } from "./StepTestConfirmed";
@@ -21,25 +21,42 @@ import { StepTestConfirmed } from "./StepTestConfirmed";
 export interface EndorsementFlowProps {
   onExitFlow?: () => void;
   onFlowCompleted?: () => void;
+  onNavigateToMilestone?: (milestoneKey: string) => void;
 }
 
-export function EndorsementFlow({ onExitFlow, onFlowCompleted }: EndorsementFlowProps) {
+export function EndorsementFlow({
+  onExitFlow,
+  onFlowCompleted,
+  onNavigateToMilestone,
+}: EndorsementFlowProps) {
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [applicant, setApplicant] = useState<ApplicantRecord>(defaultApplicantRecord);
   const [selectedClass, setSelectedClass] = useState("MCWG");
   const [applicationRef, setApplicationRef] = useState("SJ-MCWG-2048");
   const [appointment, setAppointment] = useState({
-    date: "2026-09-15",
-    formattedDate: "15 Sep 2026 (Tuesday)",
-    time: "10:30 AM - 11:30 AM",
+    date: "2024-09-16",
+    formattedDate: "16 Sep 2024 (Monday)",
+    time: "09:30 AM - 11:30 AM",
     venue: defaultApplicantRecord.rtoOffice.trackAddress,
   });
 
-  const currentStep = ENDORSEMENT_STEPS[currentStepIndex] || ENDORSEMENT_STEPS[0];
+  const stepsList = [
+    { id: "verify_dl", title: "1. Verify DL" },
+    { id: "confirm_licence", title: "2. Details" },
+    { id: "confirm_address", title: "3. Address" },
+    { id: "select_service_class", title: "4. Class" },
+    { id: "declaration", title: "5. Form 1" },
+    { id: "review_checkpoint", title: "6. Review" },
+    { id: "payment", title: "7. Fee Pay" },
+    { id: "appointment", title: "8. Slot Book" },
+    { id: "test_confirmed", title: "9. Confirmed" },
+  ];
+
+  const currentStep = stepsList[currentStepIndex] || stepsList[0];
   const canGoBack = currentStepIndex > 0 && currentStep.id !== "test_confirmed";
 
   const handleNext = () => {
-    if (currentStepIndex < ENDORSEMENT_STEPS.length - 1) {
+    if (currentStepIndex < stepsList.length - 1) {
       setCurrentStepIndex((prev) => prev + 1);
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
@@ -53,10 +70,10 @@ export function EndorsementFlow({ onExitFlow, onFlowCompleted }: EndorsementFlow
   };
 
   return (
-    <div className="w-full">
+    <div className="w-full space-y-6">
       {/* Step Flow Header */}
       <EndorsementFlowHeader
-        currentStepId={currentStep.id}
+        currentStepId={currentStep.id as EndorsementStepId}
         canGoBack={canGoBack}
         onBack={handleBack}
         onExitFlow={onExitFlow}
@@ -95,14 +112,13 @@ export function EndorsementFlow({ onExitFlow, onFlowCompleted }: EndorsementFlow
         <StepDeclaration onNext={handleNext} />
       ) : null}
 
-      {currentStep.id === "submission" ? (
-        <StepSubmission
+      {currentStep.id === "review_checkpoint" ? (
+        <StepReviewCheckpoint
           applicant={applicant}
           selectedClass={selectedClass}
-          onNext={(ref) => {
-            setApplicationRef(ref);
-            handleNext();
-          }}
+          applicationReference={applicationRef}
+          onBack={handleBack}
+          onProceedToPayment={handleNext}
         />
       ) : null}
 

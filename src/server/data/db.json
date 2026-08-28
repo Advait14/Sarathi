@@ -90,14 +90,14 @@
       "serviceType": "Endorsement of Vehicle Class (Form 2)",
       "requestedClass": "MCWG",
       "linkedLLNumber": "LL-0420260089123",
-      "stage": 4,
-      "status": "under_review",
-      "officialPortalStatus": "APPROVAL OF LL BY LICENSING AUTHORITY",
+      "stage": 6,
+      "status": "action_available",
+      "officialPortalStatus": "LICENCE ENDORSED AND DISPATCHED",
       "submissionDate": "2026-08-20T10:30:00.000Z",
-      "lastUpdated": "2026-08-27T11:20:00.000Z",
-      "feePaid": false,
+      "lastUpdated": "2026-08-28T04:13:32.429Z",
+      "feePaid": true,
       "feeAmount": 850,
-      "feeTransactionId": null,
+      "feeTransactionId": "TXN-90412429",
       "appointment": {
         "isBooked": false,
         "date": null,
@@ -122,9 +122,34 @@
           "action": "Under Review by Licensing Authority",
           "actor": "Licensing Officer (DL-04)",
           "details": "Application in review queue for endorsement approval."
+        },
+        {
+          "timestamp": "2026-08-28T03:32:16.082Z",
+          "action": "Statutory Fee Paid (₹850)",
+          "actor": "Citizen (Advait Sharma)",
+          "details": "Online payment completed via simulated gateway. Ref: TXN-87936082"
+        },
+        {
+          "timestamp": "2026-08-28T03:39:16.432Z",
+          "action": "Statutory Fee Paid (₹850)",
+          "actor": "Citizen (Advait Sharma)",
+          "details": "Online payment completed via simulated gateway. Ref: TXN-88356432"
+        },
+        {
+          "timestamp": "2026-08-28T04:13:32.429Z",
+          "action": "Statutory Fee Paid (₹850)",
+          "actor": "Citizen (Advait Sharma)",
+          "details": "Online payment completed via simulated gateway. Ref: TXN-90412429"
         }
       ]
     }
   ],
-  "sessions": []
+  "sessions": [
+    {
+      "token": "sess_usr_advait_01_1787890387778_5c7pfnv",
+      "userId": "usr_advait_01",
+      "createdAt": "2026-08-28T04:13:07.778Z",
+      "expiresAt": "2026-09-27T04:13:07.778Z"
+    }
+  ]
 }

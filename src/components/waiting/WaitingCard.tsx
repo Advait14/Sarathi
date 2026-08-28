@@ -1,3 +1,5 @@
+"use client";
+
 import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { Heading, Text } from "@/components/ui/Text";
@@ -33,52 +35,53 @@ export function WaitingCard({
     <Card
       aria-labelledby="waiting-state-heading"
       padding="lg"
-      className="bg-[var(--color-surface)] shadow-card"
+      className="bg-[var(--color-surface)] shadow-card space-y-5"
     >
       {/* Top Meta Bar */}
       <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--color-border)] pb-3">
         <div className="flex items-center gap-2">
-          <Badge tone="info">In Review by RTO</Badge>
-          <StatusIndicator label="Active Processing" status="waiting" size="sm" />
+          <Badge tone="info" icon={<ClockIcon size="sm" />}>
+            Holding Period Active
+          </Badge>
+          <StatusIndicator label="Running Automatically" status="waiting" size="sm" />
         </div>
         <span className="text-xs text-[var(--color-muted)] font-medium">
-          Last updated: {lastUpdated}
+          Ref: <strong className="font-mono text-[var(--color-ink)]">{applicationReference}</strong>
         </span>
       </div>
 
-      {/* Primary Headline & Supporting Copy */}
-      <div className="mt-5">
-        <Heading as="h2" id="waiting-state-heading" variant="heading">
+      {/* Primary Reassuring Headline */}
+      <div className="space-y-1.5">
+        <Heading as="h2" id="waiting-state-heading" variant="heading" className="text-xl font-bold text-[var(--color-ink)]">
           You&apos;re all set for now
         </Heading>
-        <Text className="mt-2 text-base text-[var(--color-text)] leading-relaxed" variant="body">
-          Your application is currently being reviewed. You don&apos;t need to submit anything right now.
+        <Text className="text-sm text-[var(--color-text)] leading-relaxed" variant="body">
+          Your application and MCWG Learner&apos;s Licence are active. Nothing is required from you right now.
         </Text>
       </div>
 
-      {/* Clear Status Details (No fake timers / No indefinite spinners) */}
-      <div className="mt-6 space-y-3.5 text-xs">
-        {/* Current Stage */}
-        <div className="rounded-[var(--radius-sm)] border border-[var(--color-border)] bg-[var(--color-surface-subtle)] p-3.5">
-          <span className="text-[0.6875rem] font-bold uppercase tracking-wider text-[var(--color-muted)] block">
-            Current Stage
-          </span>
-          <p className="mt-1 text-sm font-bold text-[var(--color-ink)]">
-            {currentStage}
-          </p>
+      {/* Holding Progress Bar (Day 14 of 30) */}
+      <div className="rounded-[var(--radius-sm)] border-2 border-[var(--color-primary-border)] bg-[var(--color-primary-soft)] p-4 space-y-2 text-xs">
+        <div className="flex items-center justify-between font-bold">
+          <span className="text-[var(--color-primary)]">Mandatory Holding Period (CMVR Rule 15)</span>
+          <span className="text-[var(--color-ink)]">Day 14 of 30 (16 Days Remaining)</span>
         </div>
 
-        {/* What Is Happening */}
-        <div className="rounded-[var(--radius-sm)] border border-[var(--color-border)] bg-[var(--color-surface-subtle)] p-3.5">
-          <span className="text-[0.6875rem] font-bold uppercase tracking-wider text-[var(--color-muted)] block flex items-center gap-1.5">
-            <ClockIcon size="sm" className="text-[var(--color-accent)] stroke-[2.5]" />
-            What is happening
-          </span>
-          <p className="mt-1 text-sm text-[var(--color-text)] leading-relaxed">
-            {whatIsHappening}
-          </p>
+        {/* Visual Progress Bar */}
+        <div className="w-full h-2.5 rounded-full bg-white border border-[var(--color-primary-border)] overflow-hidden">
+          <div
+            className="h-full bg-[var(--color-primary)] rounded-full transition-all"
+            style={{ width: "46.6%" }}
+          />
         </div>
 
+        <span className="text-[0.6875rem] text-[var(--color-muted)] block">
+          Central Motor Vehicles Rules require 30 days of riding practice with an L-board before your automated test track evaluation.
+        </span>
+      </div>
+
+      {/* Status Clarity Grid */}
+      <div className="space-y-3 text-xs">
         {/* Grid: Responsibility & Applicant Action */}
         <div className="grid gap-3 sm:grid-cols-2">
           {/* Who is responsible */}
@@ -87,11 +90,11 @@ export function WaitingCard({
               <UserIcon size="sm" className="text-[var(--color-muted)]" />
               Who is responsible
             </span>
-            <p className="mt-1.5 text-sm font-bold text-[var(--color-ink)]">
+            <p className="mt-1 text-xs font-bold text-[var(--color-ink)]">
               {rtoName}
             </p>
-            <p className="mt-0.5 text-xs text-[var(--color-muted)]">
-              Licensing authority officer scrutinizing records.
+            <p className="mt-0.5 text-[0.6875rem] text-[var(--color-muted)]">
+              National registry eligibility timer running.
             </p>
           </div>
 
@@ -101,11 +104,11 @@ export function WaitingCard({
               <CheckIcon size="sm" className="text-[var(--color-success)] stroke-[2.5]" />
               Do I need to do anything?
             </span>
-            <p className="mt-1.5 text-sm font-bold text-[var(--color-success-text)]">
-              Nothing required right now
+            <p className="mt-1 text-xs font-bold text-[var(--color-success-text)]">
+              Nothing required today
             </p>
-            <p className="mt-0.5 text-xs text-[var(--color-success-text)] opacity-90">
-              No additional documents requested.
+            <p className="mt-0.5 text-[0.6875rem] text-[var(--color-success-text)] opacity-90">
+              Your application is saved. Safe to return later.
             </p>
           </div>
         </div>
@@ -116,21 +119,16 @@ export function WaitingCard({
             <ArrowRightIcon size="sm" className="text-[var(--color-primary)] stroke-[2.5]" />
             What happens next
           </span>
-          <p className="mt-1 text-sm text-[var(--color-text)] leading-relaxed">
+          <p className="mt-1 text-xs text-[var(--color-text)] leading-relaxed">
             {whatHappensNext}
           </p>
         </div>
       </div>
 
-      {/* Reassurance Context Box: Safe to leave and return */}
-      <div className="mt-6 rounded-[var(--radius-sm)] border border-[var(--color-info-border)] bg-[var(--color-info-soft)] p-3.5 text-xs text-[var(--color-text)] flex items-start gap-2.5">
-        <ShieldIcon size="sm" className="text-[var(--color-info)] shrink-0 mt-0.5" />
-        <p className="leading-relaxed text-[var(--color-muted)]">
-          <strong className="text-[var(--color-ink)]">Safe to leave anytime: </strong>
-          Your application progress is securely saved under reference{" "}
-          <span className="font-mono font-bold text-[var(--color-ink)]">{applicationReference}</span>.
-          You can return whenever you like to check for the next step.
-        </p>
+      {/* Reassurance Footer */}
+      <div className="rounded bg-[var(--color-canvas)] p-3 text-[0.6875rem] text-[var(--color-muted)] border border-[var(--color-border)] flex items-center justify-between">
+        <span>✓ Your journey progress is securely saved. You can close this window at any time.</span>
+        <span className="font-mono text-[var(--color-ink)] font-semibold">19 Sep 2026 Unlock</span>
       </div>
     </Card>
   );

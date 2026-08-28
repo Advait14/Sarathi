@@ -3,7 +3,11 @@ import { WaitingCard } from "./WaitingCard";
 import { WaitingGuidanceCard } from "./WaitingGuidanceCard";
 import { syntheticJourneyData } from "@/data/journey";
 
-export function WaitingView() {
+export interface WaitingViewProps {
+  onActionClick?: () => void;
+}
+
+export function WaitingView({ onActionClick }: WaitingViewProps) {
   const {
     applicationReference,
     existingLicence,
@@ -37,11 +41,11 @@ export function WaitingView() {
         <div className="space-y-6 lg:sticky lg:top-6">
           <WaitingCard
             applicationReference={applicationReference}
-            currentStage="Stage 4: Endorsement Scrutiny / Review"
-            lastUpdated="27 Aug 2026, 03:45 PM"
+            currentStage="Stage 3: Mandatory Holding Period (In Progress)"
+            lastUpdated="28 Aug 2026, 03:45 PM"
             rtoName="Licensing Authority (RTO Janakpuri, West Delhi)"
-            whatIsHappening="Your application documents, linked MCWG Learner's Licence, and fitness declarations are currently being scrutinized by the licensing officer."
-            whatHappensNext="As soon as officer review is completed, your next step (statutory fee payment and driving test slot booking) will appear right here."
+            whatIsHappening="Your MCWG Learner's Licence is active. The mandatory 30-day practice holding period under CMVR Rule 15 is in progress (Day 14 of 30)."
+            whatHappensNext="As soon as the 30-day holding period completes on 19 Sep 2026, your endorsement application and driving test booking will automatically unlock."
           />
 
           <WaitingGuidanceCard

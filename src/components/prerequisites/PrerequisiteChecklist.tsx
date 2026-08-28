@@ -10,46 +10,55 @@ export interface PrerequisiteChecklistProps {
 
 export function PrerequisiteChecklist({ items }: PrerequisiteChecklistProps) {
   return (
-    <Card aria-labelledby="prerequisite-checklist-heading" padding="md" className="bg-[var(--color-surface)]">
+    <Card aria-labelledby="prerequisite-checklist-heading" padding="md" className="bg-[var(--color-surface)] shadow-card">
       <div className="flex items-center justify-between gap-2 border-b border-[var(--color-border)] pb-3">
         <div>
           <Heading as="h2" id="prerequisite-checklist-heading" variant="section">
-            Prerequisite checklist
+            Prerequisite Readiness Checklist
           </Heading>
           <Text className="mt-0.5 text-xs text-[var(--color-muted)]" variant="caption">
-            Official requirements checked before starting endorsement
+            Official statutory criteria evaluated before endorsement filing
           </Text>
         </div>
+        <Badge tone="neutral" size="sm">
+          CMVR Rule 10
+        </Badge>
       </div>
 
-      <ul role="list" className="mt-4 space-y-4 list-none p-0 m-0">
-        {items.map((item) => {
+      <ul role="list" className="mt-4 space-y-3 list-none p-0 m-0">
+        {items.map((item, index) => {
           const isVerified = item.status === "verified";
           const isMissing = item.status === "missing";
           const isPending = item.status === "pending";
 
+          const categoryLabel = isVerified
+            ? "1. WHAT YOU HAVE"
+            : isMissing
+            ? "2. WHAT YOU NEED"
+            : "3. WHAT HAPPENS NEXT";
+
           return (
             <li
               key={item.id}
-              className={`rounded-[var(--radius-sm)] border p-3.5 transition-colors ${
+              className={`rounded-[var(--radius-sm)] border p-4 transition-all ${
                 isVerified
                   ? "border-[var(--color-success-border)] bg-[var(--color-success-soft)]"
                   : isMissing
-                  ? "border-[var(--color-warning-border)] bg-[var(--color-warning-soft)]"
+                  ? "border-2 border-[var(--color-warning-border)] bg-[var(--color-warning-soft)] shadow-sm"
                   : "border-[var(--color-border)] bg-[var(--color-surface-subtle)]"
               }`}
             >
-              <div className="flex items-start justify-between gap-3">
+              <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
                 <div className="flex items-start gap-3">
                   {/* Status Glyph Icon */}
                   <span
                     aria-hidden="true"
-                    className={`mt-0.5 flex size-6 shrink-0 items-center justify-center rounded-full text-white shadow-sm ${
+                    className={`mt-0.5 flex size-7 shrink-0 items-center justify-center rounded-full text-white shadow-sm font-bold text-xs ${
                       isVerified
                         ? "bg-[var(--color-success)]"
                         : isMissing
-                        ? "bg-[var(--color-warning)]"
-                        : "bg-[var(--color-border-strong)]"
+                        ? "bg-[var(--color-warning)] text-white"
+                        : "bg-[var(--color-muted)] text-white"
                     }`}
                   >
                     {isVerified ? (
@@ -61,26 +70,31 @@ export function PrerequisiteChecklist({ items }: PrerequisiteChecklistProps) {
                     )}
                   </span>
 
-                  <div>
-                    <div className="flex flex-wrap items-center gap-2">
-                      <h3
-                        className={`text-sm font-bold leading-tight ${
-                          isVerified
-                            ? "text-[var(--color-success-text)]"
-                            : isMissing
-                            ? "text-[var(--color-warning-text)]"
-                            : "text-[var(--color-muted)]"
-                        }`}
-                      >
-                        {item.title}
-                      </h3>
+                  <div className="space-y-1">
+                    <div className="flex items-center gap-2">
+                      <span className="text-[0.625rem] font-bold uppercase tracking-wider text-[var(--color-muted)]">
+                        {categoryLabel}
+                      </span>
                     </div>
-                    <p
-                      className={`text-xs mt-1 ${
+
+                    <h3
+                      className={`text-sm font-bold leading-tight ${
                         isVerified
                           ? "text-[var(--color-success-text)]"
                           : isMissing
-                          ? "text-[var(--color-warning-text)]"
+                          ? "text-[var(--color-ink)]"
+                          : "text-[var(--color-muted)]"
+                      }`}
+                    >
+                      {item.title}
+                    </h3>
+
+                    <p
+                      className={`text-xs ${
+                        isVerified
+                          ? "text-[var(--color-success-text)]"
+                          : isMissing
+                          ? "text-[var(--color-text)]"
                           : "text-[var(--color-muted)]"
                       }`}
                     >
@@ -93,7 +107,7 @@ export function PrerequisiteChecklist({ items }: PrerequisiteChecklistProps) {
                 <Badge
                   tone={isVerified ? "success" : isMissing ? "warning" : "neutral"}
                   size="sm"
-                  className="shrink-0"
+                  className="shrink-0 self-start font-bold"
                 >
                   {item.statusLabel}
                 </Badge>
