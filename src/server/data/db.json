@@ -94,10 +94,10 @@
       "status": "action_available",
       "officialPortalStatus": "LICENCE ENDORSED AND DISPATCHED",
       "submissionDate": "2026-08-20T10:30:00.000Z",
-      "lastUpdated": "2026-08-29T15:55:23.228Z",
+      "lastUpdated": "2026-08-29T17:04:01.357Z",
       "feePaid": true,
       "feeAmount": 850,
-      "feeTransactionId": "TXN-18923228",
+      "feeTransactionId": "TXN-23041357",
       "appointment": {
         "isBooked": false,
         "date": null,
@@ -230,16 +230,28 @@
           "action": "Statutory Fee Paid (₹850)",
           "actor": "Citizen (Advait Sharma)",
           "details": "Online payment completed via simulated gateway. Ref: TXN-18923228"
+        },
+        {
+          "timestamp": "2026-08-29T16:21:00.103Z",
+          "action": "Statutory Fee Paid (₹850)",
+          "actor": "Citizen (Advait Sharma)",
+          "details": "Online payment completed via simulated gateway. Ref: TXN-20460103"
+        },
+        {
+          "timestamp": "2026-08-29T17:04:01.357Z",
+          "action": "Statutory Fee Paid (₹850)",
+          "actor": "Citizen (Advait Sharma)",
+          "details": "Online payment completed via simulated gateway. Ref: TXN-23041357"
         }
       ]
     }
   ],
   "sessions": [
     {
-      "token": "sess_usr_advait_01_1788019017430_4dbdco5",
+      "token": "sess_usr_advait_01_1788023018400_ahh2h11",
       "userId": "usr_advait_01",
-      "createdAt": "2026-08-29T15:56:57.430Z",
-      "expiresAt": "2026-09-28T15:56:57.430Z"
+      "createdAt": "2026-08-29T17:03:38.400Z",
+      "expiresAt": "2026-09-28T17:03:38.400Z"
     }
   ]
 }

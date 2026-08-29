@@ -2,8 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@plugin "daisyui";
-
 :root {
   /* ==========================================================================
      Color Tokens — Civic, Calm, Trustworthy
