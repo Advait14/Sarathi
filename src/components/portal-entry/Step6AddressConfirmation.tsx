@@ -5,11 +5,10 @@ import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { Heading, Text } from "@/components/ui/Text";
+import { Alert } from "@/components/ui/Alert";
 import {
   ShieldIcon,
   ArrowRightIcon,
-  CheckIcon,
-  AlertTriangleIcon,
   InfoIcon,
 } from "@/components/ui/Icons";
 import type { PortalServiceItem, StateRecord } from "@/data/portalEntry";
@@ -37,7 +36,7 @@ export function Step6AddressConfirmation({
     : "B-4/12, Block B, Janakpuri, West Delhi, New Delhi, Delhi, 110058";
 
   return (
-    <div className="w-full space-y-6">
+    <div className="w-full space-y-6 animate-in fade-in duration-300">
       {/* Header */}
       <div className="border-b border-[var(--color-border)] pb-6 pt-2">
         <div className="flex flex-wrap items-center justify-between gap-3">
@@ -51,19 +50,19 @@ export function Step6AddressConfirmation({
               ← DL Details
             </Button>
             <Badge tone="primary" icon={<ShieldIcon size="sm" />}>
-              Step 6 of 7 · Postal Delivery Dispatch
+              Postal Delivery Dispatch
             </Badge>
           </div>
-          <span className="text-xs font-bold text-[var(--color-ink)]">
-            India Post Speed Post Dispatch
+          <span className="badge badge-outline badge-md font-bold text-[var(--color-ink)]">
+            India Post Speed Post
           </span>
         </div>
 
-        <Heading as="h1" className="mt-3" variant="title">
+        <Heading as="h1" className="mt-3 text-2xl sm:text-3xl font-black text-[var(--color-ink)] tracking-tight">
           Smart Card Delivery Address Confirmation
         </Heading>
 
-        <Text className="mt-1.5 text-sm text-[var(--color-text)] max-w-2xl" variant="body">
+        <Text className="mt-1.5 text-sm text-[var(--color-text)] max-w-2xl">
           Upon passing your MCWG driving test, your updated Driving Licence smart card will be automatically printed and dispatched via India Post Speed Post.
         </Text>
       </div>
@@ -98,27 +97,28 @@ export function Step6AddressConfirmation({
           </div>
         </div>
 
-        {/* Action Choice Selection (Replaces the brutal single-OK popup) */}
+        {/* Action Choice Selection */}
         <div className="space-y-3">
           <span className="text-xs font-bold uppercase tracking-wider text-[var(--color-ink)] block">
             Is this delivery address current and correct?
           </span>
 
           <div className="grid gap-3 sm:grid-cols-2">
-            <button
-              type="button"
+            <label
               onClick={() => setAddressChoice("correct")}
-              className={`flex items-start gap-3 rounded-[var(--radius-sm)] border p-4 text-left transition-all ${
+              className={`flex items-start gap-3 rounded-[var(--radius-sm)] border p-4 text-left cursor-pointer transition-all ${
                 addressChoice === "correct"
-                  ? "border-2 border-[var(--color-success-border)] bg-[var(--color-success-soft)] ring-2 ring-[var(--color-success-soft)] shadow-sm"
-                  : "border border-[var(--color-border)] bg-[var(--color-surface)] hover:bg-[var(--color-surface-subtle)]"
+                  ? "border-2 border-emerald-500 bg-emerald-50/70 shadow-sm"
+                  : "border-[var(--color-border)] bg-[var(--color-surface)] hover:bg-slate-50"
               }`}
             >
-              <div className="mt-0.5 flex size-4 shrink-0 items-center justify-center rounded-full border border-[var(--color-border-strong)] bg-white">
-                {addressChoice === "correct" ? (
-                  <div className="size-2 rounded-full bg-[var(--color-success-text)]" />
-                ) : null}
-              </div>
+              <input
+                type="radio"
+                name="addressChoice"
+                checked={addressChoice === "correct"}
+                onChange={() => setAddressChoice("correct")}
+                className="radio radio-primary radio-sm mt-0.5"
+              />
               <div className="text-xs">
                 <span className="font-bold text-[var(--color-ink)] block">
                   Yes, Address is Correct
@@ -127,61 +127,60 @@ export function Step6AddressConfirmation({
                   Proceed directly with MCWG Endorsement application using this address.
                 </span>
               </div>
-            </button>
+            </label>
 
-            <button
-              type="button"
+            <label
               onClick={() => setAddressChoice("change")}
-              className={`flex items-start gap-3 rounded-[var(--radius-sm)] border p-4 text-left transition-all ${
+              className={`flex items-start gap-3 rounded-[var(--radius-sm)] border p-4 text-left cursor-pointer transition-all ${
                 addressChoice === "change"
-                  ? "border-2 border-[var(--color-accent-border)] bg-[var(--color-accent-soft)] ring-2 ring-[var(--color-accent-soft)] shadow-sm"
-                  : "border border-[var(--color-border)] bg-[var(--color-surface)] hover:bg-[var(--color-surface-subtle)]"
+                  ? "border-2 border-amber-500 bg-amber-50/70 shadow-sm"
+                  : "border-[var(--color-border)] bg-[var(--color-surface)] hover:bg-slate-50"
               }`}
             >
-              <div className="mt-0.5 flex size-4 shrink-0 items-center justify-center rounded-full border border-[var(--color-border-strong)] bg-white">
-                {addressChoice === "change" ? (
-                  <div className="size-2 rounded-full bg-[var(--color-accent)]" />
-                ) : null}
-              </div>
+              <input
+                type="radio"
+                name="addressChoice"
+                checked={addressChoice === "change"}
+                onChange={() => setAddressChoice("change")}
+                className="radio radio-warning radio-sm mt-0.5"
+              />
               <div className="text-xs">
                 <span className="font-bold text-[var(--color-ink)] block">
-                  No, I Need to Update Address
+                  No, I Need to Change Address
                 </span>
                 <span className="text-[var(--color-muted)] text-[0.6875rem] block mt-0.5">
-                  Bundle Form 1 Change of Address service simultaneously in this application.
+                  Bundle Change of Address service with this endorsement application.
                 </span>
               </div>
-            </button>
+            </label>
           </div>
         </div>
 
-        {addressChoice === "change" ? (
-          <div className="rounded-[var(--radius-sm)] border border-[var(--color-accent-border)] bg-[var(--color-accent-soft)] p-4 text-xs text-[var(--color-accent-text)] animate-in fade-in duration-150">
-            <span className="font-bold block">
-              Dual Service Processing (CMVR Rule 17):
-            </span>
-            <p className="mt-1 text-xs leading-relaxed">
-              Your application will include both <strong>MCWG Addition</strong> and <strong>Change of Address</strong>. You will be able to provide your updated address with Aadhaar e-KYC or address proof in the subsequent step.
-            </p>
-          </div>
-        ) : null}
+        {addressChoice === "change" && (
+          <Alert type="warning" title="Bundled Change of Address Service">
+            An address update will require uploading proof of current residence (Aadhaar / Electricity Bill) during the application step.
+          </Alert>
+        )}
 
-        {/* Action Controls */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-t border-[var(--color-border)] pt-4">
-          <Button variant="secondary" size="md" onClick={onBack}>
+        {/* Action Footer */}
+        <div className="pt-4 border-t border-[var(--color-border)] flex flex-col sm:flex-row items-center justify-between gap-4">
+          <Button
+            variant="secondary"
+            size="md"
+            onClick={onBack}
+            className="w-full sm:w-auto text-xs"
+          >
             ← Back to Particulars
           </Button>
 
           <Button
             variant="primary"
-            size="md"
-            rightIcon={<ArrowRightIcon size="sm" />}
+            size="lg"
+            rightIcon={<ArrowRightIcon size="md" />}
             onClick={() => onNext(addressChoice === "change")}
-            className="font-bold shadow-sm"
+            className="w-full sm:w-auto font-black shadow-md bg-[var(--color-primary)] text-sm sm:text-base py-3 px-8"
           >
-            {addressChoice === "correct"
-              ? "Confirm Address & Proceed to Authentication"
-              : "Continue with Address Update & Authentication"}
+            Confirm Jurisdiction &amp; Continue to Aadhaar Authentication
           </Button>
         </div>
       </Card>

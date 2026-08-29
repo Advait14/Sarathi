@@ -1,14 +1,14 @@
 "use client";
 
-import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
+import { Card } from "@/components/ui/Card";
 import { Heading, Text } from "@/components/ui/Text";
+import { Alert } from "@/components/ui/Alert";
 import {
   ShieldIcon,
   ArrowRightIcon,
   CheckIcon,
-  ClockIcon,
   InfoIcon,
 } from "@/components/ui/Icons";
 import {
@@ -30,8 +30,35 @@ export function Step3ServiceInstructions({
   selectedService,
   selectedState,
 }: Step3ServiceInstructionsProps) {
+  const requirements = [
+    {
+      step: 1,
+      title: "Existing Driving Licence (DL)",
+      description:
+        "Your 16-character driving licence number registered on the national portal with valid records.",
+    },
+    {
+      step: 2,
+      title: "Active MCWG Learner's Licence (LL)",
+      description:
+        "Mandatory under CMVR Rule 15 with a 30-day statutory holding period completed for endorsement.",
+    },
+    {
+      step: 3,
+      title: "Aadhaar / Mobile for OTP Verification",
+      description:
+        "Used for instant paperless e-signing, instant jurisdictional routing, and identity authentication.",
+    },
+    {
+      step: 4,
+      title: "Statutory Government Fee (₹850)",
+      description:
+        "Endorsement fee (₹500) + MCWG Driving Test (₹300) + Track facility fee (₹50), payable securely online.",
+    },
+  ];
+
   return (
-    <div className="w-full space-y-6">
+    <div className="w-full space-y-8 animate-in fade-in duration-300">
       {/* Header */}
       <div className="border-b border-[var(--color-border)] pb-6 pt-2">
         <div className="flex flex-wrap items-center justify-between gap-3">
@@ -45,143 +72,140 @@ export function Step3ServiceInstructions({
               ← All Services
             </Button>
             <Badge tone="primary" icon={<ShieldIcon size="sm" />}>
-              Step 3 of 4 · Instructions & Process Roadmap
+              Process Roadmap &amp; Instructions
             </Badge>
           </div>
-          <span className="text-xs font-bold text-[var(--color-ink)]">
+          <span className="badge badge-outline badge-md font-bold text-[var(--color-ink)]">
             {selectedState.name} Transport Department
           </span>
         </div>
 
-        <Heading as="h1" className="mt-3" variant="title">
+        <Heading as="h1" className="mt-3 text-2xl sm:text-3xl font-black text-[var(--color-ink)] tracking-tight">
           Instructions for {selectedService.title}
         </Heading>
 
-        <Text className="mt-1.5 text-sm text-[var(--color-text)] max-w-2xl" variant="body">
-          Review the application stages and readiness checklist below before entering your driving licence credentials.
+        <Text className="mt-1.5 text-sm text-[var(--color-text)] max-w-2xl">
+          Review the sequential stages diagram and prerequisite checklist before entering your licence credentials.
         </Text>
       </div>
 
-      {/* 4-Stage Progressive Disclosure Roadmap */}
-      <div>
-        <span className="text-xs font-bold uppercase tracking-wider text-[var(--color-muted)] block mb-3">
-          Application Submission Stages (In Sequential Order):
+      {/* 1. Sequential Stages Diagram */}
+      <div className="space-y-3">
+        <div className="flex items-center justify-between">
+          <span className="text-xs font-bold uppercase tracking-wider text-[var(--color-muted)] block">
+            Application Stages (Left-to-Right Sequential Flow):
+          </span>
+          <span className="badge badge-primary badge-sm font-semibold">
+            Total Estimated Time: ~9 Mins
+          </span>
+        </div>
+
+        <div className="rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-surface)] p-5 sm:p-6 shadow-sm">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 relative">
+            {DL_SERVICES_ROADMAP.map((stage) => (
+              <div key={stage.stepNumber} className="flex flex-col relative">
+                {/* Stage Card */}
+                <div className="flex-1 rounded-[var(--radius-sm)] border border-slate-200 bg-gradient-to-b from-slate-50 to-white p-4 flex flex-col justify-between shadow-xs hover:border-blue-300 transition-all">
+                  <div>
+                    {/* Top Row: Number, Stage Tag, Time Badge */}
+                    <div className="flex items-center justify-between gap-2 pb-2.5 mb-2.5 border-b border-slate-100">
+                      <div className="flex items-center gap-2">
+                        <span className="flex size-7 items-center justify-center rounded-full bg-[#003366] text-white font-black text-xs shadow-xs">
+                          {stage.stepNumber}
+                        </span>
+                        <span className="text-[0.6875rem] font-black uppercase tracking-wider text-[var(--color-primary)]">
+                          Stage {stage.stepNumber}
+                        </span>
+                      </div>
+                      <span className="badge badge-ghost badge-xs font-mono font-bold text-[var(--color-primary)]">
+                        {stage.estimatedTime}
+                      </span>
+                    </div>
+
+                    {/* Stage Title */}
+                    <h3 className="text-sm font-bold text-[var(--color-ink)] leading-snug">
+                      {stage.title}
+                    </h3>
+
+                    {/* Stage Description */}
+                    <p className="mt-1.5 text-xs text-[var(--color-muted)] leading-relaxed">
+                      {stage.description}
+                    </p>
+                  </div>
+
+                  {/* Stage Delivery Pill */}
+                  <div className="mt-4 pt-2.5 border-t border-slate-100 flex items-center justify-between">
+                    <span className="text-[0.625rem] font-bold uppercase tracking-wider text-[var(--color-muted)]">
+                      Mode:
+                    </span>
+                    <span className="badge badge-ghost badge-xs font-semibold text-[var(--color-ink)]">
+                      {stage.isOnline ? "100% Online" : "ADTT Track"}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* 2. Mandatory Pre-requisites Checklist */}
+      <div className="space-y-3">
+        <span className="text-xs font-bold uppercase tracking-wider text-[var(--color-muted)] block">
+          Mandatory Pre-requisites &amp; Documents Required:
         </span>
 
-        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-          {DL_SERVICES_ROADMAP.map((stage) => (
+        <div className="grid gap-4 sm:grid-cols-2">
+          {requirements.map((req) => (
             <Card
-              key={stage.stepNumber}
+              key={req.step}
               padding="md"
-              className="bg-[var(--color-surface)] shadow-card flex flex-col justify-between border-t-4 border-t-[var(--color-primary)]"
+              className="bg-[var(--color-surface)] border border-[var(--color-border)] space-y-2"
             >
-              <div>
-                <div className="flex items-center justify-between">
-                  <span className="flex size-6 items-center justify-center rounded-full bg-[var(--color-primary-soft)] text-xs font-bold text-[var(--color-primary)]">
-                    {stage.stepNumber}
-                  </span>
-                  <Badge tone="neutral" size="sm">
-                    {stage.estimatedTime}
-                  </Badge>
+              <div className="flex items-start gap-3">
+                <div className="size-6 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0 mt-0.5">
+                  <CheckIcon size="sm" className="stroke-[2.5]" />
                 </div>
-
-                <Heading as="h3" variant="subsection" className="mt-3 text-sm font-bold leading-snug">
-                  {stage.title}
-                </Heading>
-
-                <Text className="mt-1.5 text-xs text-[var(--color-muted)] leading-relaxed">
-                  {stage.description}
-                </Text>
-              </div>
-
-              <div className="mt-4 border-t border-[var(--color-border-subtle)] pt-2 text-[0.6875rem] font-semibold text-[var(--color-success-text)] flex items-center gap-1">
-                <CheckIcon size="sm" />
-                100% Online Facility
+                <div className="space-y-0.5">
+                  <h4 className="text-sm font-bold text-[var(--color-ink)]">
+                    {req.title}
+                  </h4>
+                  <p className="text-xs text-[var(--color-muted)] leading-relaxed">
+                    {req.description}
+                  </p>
+                </div>
               </div>
             </Card>
           ))}
         </div>
       </div>
 
-      {/* Document & Prerequisite Readiness Box */}
-      <Card padding="lg" className="bg-[var(--color-surface)] shadow-card space-y-4">
-        <Heading as="h2" variant="section">
-          What You Will Need
-        </Heading>
+      {/* 3. Advisory Alert Banner */}
+      <Alert type="info" title="Pre-Flight Verification Note">
+        The system will automatically perform a non-invasive check against your DL record to verify that an active MCWG Learner&apos;s Licence with the required statutory holding period exists.
+      </Alert>
 
-        <div className="grid gap-3 sm:grid-cols-2 text-xs">
-          <div className="rounded-[var(--radius-sm)] border border-[var(--color-border)] bg-[var(--color-surface-subtle)] p-3.5 space-y-1">
-            <span className="font-bold text-[var(--color-ink)] block">
-              1. Existing Driving Licence (DL)
-            </span>
-            <p className="text-[var(--color-muted)]">
-              Your 16-character driving licence number registered on the national portal.
-            </p>
-          </div>
+      {/* 4. Action Button Footer */}
+      <div className="pt-4 border-t border-[var(--color-border)] flex flex-col sm:flex-row items-center justify-between gap-4">
+        <Button
+          variant="secondary"
+          size="md"
+          onClick={onBack}
+          className="w-full sm:w-auto text-xs"
+        >
+          ← Back to Services
+        </Button>
 
-          <div className="rounded-[var(--radius-sm)] border border-[var(--color-border)] bg-[var(--color-surface-subtle)] p-3.5 space-y-1">
-            <span className="font-bold text-[var(--color-ink)] block">
-              2. Active MCWG Learner&apos;s Licence (LL)
-            </span>
-            <p className="text-[var(--color-muted)]">
-              Mandatory under CMVR Rule 15 with 30-day holding period for endorsement.
-            </p>
-          </div>
-
-          <div className="rounded-[var(--radius-sm)] border border-[var(--color-border)] bg-[var(--color-surface-subtle)] p-3.5 space-y-1">
-            <span className="font-bold text-[var(--color-ink)] block">
-              3. Aadhaar / Mobile for OTP
-            </span>
-            <p className="text-[var(--color-muted)]">
-              Used for instant paperless e-signing and instant jurisdictional verification.
-            </p>
-          </div>
-
-          <div className="rounded-[var(--radius-sm)] border border-[var(--color-border)] bg-[var(--color-surface-subtle)] p-3.5 space-y-1">
-            <span className="font-bold text-[var(--color-ink)] block">
-              4. Statutory Fee (₹850)
-            </span>
-            <p className="text-[var(--color-muted)]">
-              Endorsement fee (₹500) + MCWG Driving Test (₹300) + Track fee (₹50).
-            </p>
-          </div>
-        </div>
-
-        {/* Form 1-A Clarification Banner */}
-        <div className="rounded-[var(--radius-sm)] border border-[var(--color-info-border)] bg-[var(--color-info-soft)] p-4 text-xs text-[var(--color-text)] flex items-start gap-3">
-          <InfoIcon size="sm" className="text-[var(--color-info)] mt-0.5 shrink-0" />
-          <div>
-            <span className="font-bold text-[var(--color-info-text)] block">
-              Medical Certificate (Form 1-A) Guidance:
-            </span>
-            <p className="mt-0.5 text-xs text-[var(--color-muted)] leading-relaxed">
-              Form 1-A is only mandatory if you are above 40 years of age or applying for transport vehicle categories. For standard non-transport MCWG endorsements under 40 years, an online Form 1 self-declaration is sufficient.
-            </p>
-          </div>
-        </div>
-
-        {/* Action Controls */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-t border-[var(--color-border)] pt-4">
-          <Button
-            variant="secondary"
-            size="md"
-            onClick={onBack}
-            className="text-xs"
-          >
-            ← Back to Services Hub
-          </Button>
-
-          <Button
-            variant="primary"
-            size="md"
-            rightIcon={<ArrowRightIcon size="sm" />}
-            onClick={onNext}
-            className="font-bold shadow-sm"
-          >
-            Proceed to Enter DL Details
-          </Button>
-        </div>
-      </Card>
+        <Button
+          variant="primary"
+          size="lg"
+          rightIcon={<ArrowRightIcon size="md" />}
+          onClick={onNext}
+          className="w-full sm:w-auto font-black shadow-md bg-[var(--color-primary)] text-sm sm:text-base py-3 px-8"
+        >
+          Proceed to Enter DL Details
+        </Button>
+      </div>
     </div>
   );
 }

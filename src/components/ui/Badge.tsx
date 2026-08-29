@@ -10,17 +10,17 @@ export type BadgeProps = HTMLAttributes<HTMLSpanElement> & {
 };
 
 const toneClasses: Record<BadgeTone, string> = {
-  neutral: "bg-[var(--color-surface-muted)] text-[var(--color-muted)] border-[var(--color-border)]",
-  primary: "bg-[var(--color-primary-soft)] text-[var(--color-primary-text)] border-[var(--color-primary-border)]",
-  info: "bg-[var(--color-info-soft)] text-[var(--color-info-text)] border-[var(--color-info-border)]",
-  success: "bg-[var(--color-success-soft)] text-[var(--color-success-text)] border-[var(--color-success-border)]",
-  warning: "bg-[var(--color-warning-soft)] text-[var(--color-warning-text)] border-[var(--color-warning-border)]",
-  danger: "bg-[var(--color-danger-soft)] text-[var(--color-danger-text)] border-[var(--color-danger-border)]",
+  neutral: "badge-neutral bg-[var(--color-surface-muted)] text-[var(--color-muted)] border-[var(--color-border)]",
+  primary: "badge-primary bg-[var(--color-primary-soft)] text-[var(--color-primary-text)] border-[var(--color-primary-border)]",
+  info: "badge-info bg-[var(--color-info-soft)] text-[var(--color-info-text)] border-[var(--color-info-border)]",
+  success: "badge-success bg-[var(--color-success-soft)] text-[var(--color-success-text)] border-[var(--color-success-border)]",
+  warning: "badge-warning bg-[var(--color-warning-soft)] text-[var(--color-warning-text)] border-[var(--color-warning-border)]",
+  danger: "badge-error bg-[var(--color-danger-soft)] text-[var(--color-danger-text)] border-[var(--color-danger-border)]",
 };
 
 const sizeClasses: Record<BadgeSize, string> = {
-  sm: "px-2 py-0.5 text-[0.6875rem] leading-4 gap-1",
-  md: "px-2.5 py-1 text-xs leading-4 gap-1.5",
+  sm: "badge-sm px-2 py-0.5 text-[0.6875rem] leading-4 gap-1",
+  md: "badge-md px-2.5 py-1 text-xs leading-4 gap-1.5",
 };
 
 export function Badge({
@@ -33,7 +33,7 @@ export function Badge({
 }: BadgeProps) {
   return (
     <span
-      className={`inline-flex items-center font-semibold rounded-[var(--radius-badge)] border tracking-wide uppercase ${sizeClasses[size]} ${toneClasses[tone]} ${className}`}
+      className={`badge inline-flex items-center font-semibold rounded-[var(--radius-badge)] border tracking-wide uppercase ${sizeClasses[size]} ${toneClasses[tone]} ${className}`}
       {...props}
     >
       {icon ? (

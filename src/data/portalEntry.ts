@@ -44,7 +44,7 @@ export interface PortalServiceItem {
 export const PORTAL_SERVICES: PortalServiceItem[] = [
   {
     id: "add_endorsement_mcwg",
-    title: "Additional Endorsement to DL (MCWG / Two-Wheeler)",
+    title: "Additional Endorsement to DL",
     category: "endorsement",
     shortDescription: "Add Motorcycle With Gear (MCWG) or other vehicle classes to your existing driving licence.",
     highlight: true,
@@ -160,7 +160,7 @@ export const DL_SERVICES_ROADMAP: InstructionRoadmapMilestone[] = [
   {
     stepNumber: 4,
     title: "Driving Test Slot Booking (AEDL Only)",
-    description: "Select your preferred date and time slot at the Automated Driving Test Track (RTO Janakpuri).",
+    description: "Select your preferred date and time slot at your designated Automated Driving Test Track (ADTT RTO Facility).",
     estimatedTime: "2 mins",
     isOnline: true,
   },

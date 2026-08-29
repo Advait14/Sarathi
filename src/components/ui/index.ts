@@ -1,5 +1,7 @@
 export * from "./Button";
 export * from "./Badge";
+export * from "./Alert";
+export * from "./Progress";
 export * from "./StatusIndicator";
 export * from "./Card";
 export * from "./Container";

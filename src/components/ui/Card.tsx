@@ -1,6 +1,6 @@
 import type { HTMLAttributes, ReactNode } from "react";
 
-export type CardVariant = "default" | "accent" | "warning" | "danger" | "muted";
+export type CardVariant = "default" | "accent" | "warning" | "danger" | "muted" | "success";
 export type CardPadding = "none" | "sm" | "md" | "lg";
 
 export type CardProps = HTMLAttributes<HTMLElement> & {
@@ -11,11 +11,12 @@ export type CardProps = HTMLAttributes<HTMLElement> & {
 };
 
 const variantClasses: Record<CardVariant, string> = {
-  default: "border border-[var(--color-border)] bg-[var(--color-surface)] shadow-card",
-  accent: "border-2 border-[var(--color-accent)] bg-[var(--color-surface)] shadow-card",
-  warning: "border border-[var(--color-warning-border)] bg-[var(--color-warning-soft)] shadow-sm",
-  danger: "border border-[var(--color-danger-border)] bg-[var(--color-danger-soft)] shadow-sm",
-  muted: "border border-[var(--color-border)] bg-[var(--color-surface-subtle)]",
+  default: "card card-bordered border-[var(--color-border)] bg-[var(--color-surface)] shadow-card",
+  accent: "card card-bordered border-2 border-[var(--color-accent)] bg-[var(--color-surface)] shadow-card",
+  warning: "card card-bordered border-[var(--color-warning-border)] bg-[var(--color-warning-soft)] shadow-sm",
+  danger: "card card-bordered border-[var(--color-danger-border)] bg-[var(--color-danger-soft)] shadow-sm",
+  success: "card card-bordered border-[var(--color-success-border)] bg-[var(--color-success-soft)] shadow-sm",
+  muted: "card card-bordered border-[var(--color-border)] bg-[var(--color-surface-subtle)]",
 };
 
 const paddingClasses: Record<CardPadding, string> = {

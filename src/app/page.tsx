@@ -11,6 +11,7 @@ import { WaitingView } from "@/components/waiting";
 import { ActionAvailableView } from "@/components/action-available";
 import { RecoveryView } from "@/components/recovery";
 import { CompletedView } from "@/components/completed";
+import { DrivingTestEvaluationView } from "@/components/driving-test";
 import { ContextualAssistant } from "@/components/assistant";
 import { PortalEntryFlow } from "@/components/portal-entry";
 import { UNIFIED_SCENARIOS, type UnifiedJourneyState } from "@/data/unifiedJourney";
@@ -25,6 +26,7 @@ type ScenarioKey =
   | "scenario_6_blocked"
   | "scenario_7_stalled"
   | "scenario_8_test_booked"
+  | "driving_test_results"
   | "scenario_9_completed"
   | "status_system"
   | "master_timeline";
@@ -43,15 +45,15 @@ function JourneyApp() {
 
   // Current unified journey state
   const currentScenarioState: UnifiedJourneyState =
-    UNIFIED_SCENARIOS[activeScenario] || UNIFIED_SCENARIOS.scenario_3_eligible;
+    UNIFIED_SCENARIOS[activeScenario] || UNIFIED_SCENARIOS.scenario_8_test_booked;
 
   const handleActionClick = (actionKey?: string) => {
     if (actionKey === "apply_ll") {
       setActiveScenario("scenario_1_prereq_missing");
     } else if (actionKey === "start_endorsement" || actionKey === "open_endorsement_flow") {
       setActiveScenario("scenario_4_endorsement_filing");
-    } else if (actionKey === "prep_tips") {
-      setActiveScenario("scenario_8_test_booked");
+    } else if (actionKey === "take_driving_test" || actionKey === "prep_tips" || actionKey === "download_slip") {
+      setActiveScenario("driving_test_results");
     } else if (actionKey === "view_licence") {
       setActiveScenario("scenario_9_completed");
     } else {
@@ -61,7 +63,7 @@ function JourneyApp() {
 
   return (
     <AppShell>
-      <div className="mx-auto max-w-5xl relative space-y-6">
+      <div className="mx-auto w-full max-w-[1600px] relative space-y-8">
         {/* Active Journey View Rendering */}
         {activeScenario === "portal_entry" ? (
           <PortalEntryFlow
@@ -69,7 +71,7 @@ function JourneyApp() {
               if (dl.includes("99887")) {
                 setActiveScenario("scenario_1_prereq_missing");
               } else {
-                setActiveScenario("scenario_3_eligible");
+                setActiveScenario("scenario_8_test_booked");
               }
             }}
           />
@@ -123,13 +125,19 @@ function JourneyApp() {
             onViewRtoDetails={() => setActiveScenario("master_timeline")}
           />
         ) : activeScenario === "scenario_8_test_booked" ? (
-          <ActionAvailableView
-            onContinue={() => setActiveScenario("scenario_4_endorsement_filing")}
-            onViewJourney={() => setActiveScenario("master_timeline")}
+          <MasterJourneyView
+            journeyState={UNIFIED_SCENARIOS.scenario_8_test_booked}
+            onPrimaryAction={() => setActiveScenario("driving_test_results")}
+          />
+        ) : activeScenario === "driving_test_results" ? (
+          <DrivingTestEvaluationView
+            onProceedToUpdatedLicence={() => setActiveScenario("scenario_9_completed")}
+            onBackToDashboard={() => setActiveScenario("scenario_8_test_booked")}
           />
         ) : activeScenario === "scenario_9_completed" ? (
           <CompletedView
             onViewJourney={() => setActiveScenario("master_timeline")}
+            onBackToLanding={() => setActiveScenario("portal_entry")}
           />
         ) : activeScenario === "status_system" ? (
           <ActionableStatusView

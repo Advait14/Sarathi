@@ -5,12 +5,12 @@ import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { Heading, Text } from "@/components/ui/Text";
+import { Alert } from "@/components/ui/Alert";
 import {
   ShieldIcon,
   ArrowRightIcon,
   CheckIcon,
   UserIcon,
-  AlertTriangleIcon,
 } from "@/components/ui/Icons";
 import type { PortalServiceItem, StateRecord } from "@/data/portalEntry";
 
@@ -32,8 +32,6 @@ export function Step5DlDetailsConfirmation({
   selectedState,
 }: Step5DlDetailsConfirmationProps) {
   const [isConfirmed, setIsConfirmed] = useState(true);
-  const [pincode, setPincode] = useState("110058");
-  const [holderCategory, setHolderCategory] = useState("general");
   const [error, setError] = useState<string | null>(null);
 
   const isPriya = dlNumber.includes("99887");
@@ -54,7 +52,7 @@ export function Step5DlDetailsConfirmation({
   };
 
   return (
-    <div className="w-full space-y-6">
+    <div className="w-full space-y-6 animate-in fade-in duration-300">
       {/* Header */}
       <div className="border-b border-[var(--color-border)] pb-6 pt-2">
         <div className="flex flex-wrap items-center justify-between gap-3">
@@ -68,19 +66,19 @@ export function Step5DlDetailsConfirmation({
               ← DL Lookup
             </Button>
             <Badge tone="primary" icon={<ShieldIcon size="sm" />}>
-              Step 5 of 7 · Particulars & Jurisdiction
+              Details &amp; Confirmation
             </Badge>
           </div>
-          <span className="text-xs font-bold text-[var(--color-ink)]">
+          <span className="badge badge-outline badge-md font-bold text-[var(--color-ink)]">
             National Register Match
           </span>
         </div>
 
-        <Heading as="h1" className="mt-3" variant="title">
-          Confirm Licence Details & RTO Jurisdiction
+        <Heading as="h1" className="mt-3 text-2xl sm:text-3xl font-black text-[var(--color-ink)] tracking-tight">
+          Confirm Licence Details &amp; RTO Jurisdiction
         </Heading>
 
-        <Text className="mt-1.5 text-sm text-[var(--color-text)] max-w-2xl" variant="body">
+        <Text className="mt-1.5 text-sm text-[var(--color-text)] max-w-2xl">
           Verify your driving licence record, active vehicle classes, and confirm the jurisdictional RTO office for your application.
         </Text>
       </div>
@@ -132,136 +130,88 @@ export function Step5DlDetailsConfirmation({
               </div>
               <div>
                 <span className="text-[0.6875rem] text-[var(--color-muted)] block">Date of Birth:</span>
-                <span className="font-mono font-semibold text-[var(--color-ink)]">{dob}</span>
+                <span className="font-semibold text-[var(--color-ink)]">{dob || "15/08/1995"}</span>
               </div>
               <div>
                 <span className="text-[0.6875rem] text-[var(--color-muted)] block">Blood Group:</span>
-                <span className="font-mono font-bold text-[var(--color-primary)]">{bloodGroup}</span>
+                <span className="font-semibold text-[var(--color-ink)]">{bloodGroup}</span>
+              </div>
+              <div className="col-span-2">
+                <span className="text-[0.6875rem] text-[var(--color-muted)] block">Registered Address:</span>
+                <span className="font-semibold text-[var(--color-ink)] leading-tight block mt-0.5">
+                  B-4/122, Janakpuri, West Delhi, New Delhi - 110058
+                </span>
               </div>
             </div>
           </div>
 
-          {/* Right Column: Existing Vehicle Classes */}
+          {/* Right Column: Vehicle Class & Jurisdiction */}
           <div className="space-y-3 rounded-[var(--radius-sm)] border border-[var(--color-border)] bg-[var(--color-surface-subtle)] p-4 text-xs">
             <span className="font-bold uppercase tracking-wider text-[var(--color-muted)] text-[0.6875rem] block pb-2 border-b border-[var(--color-border-subtle)]">
-              Existing Authorized Vehicle Classes (COV)
+              Authorised Vehicle Classes &amp; RTO Jurisdiction
             </span>
 
-            <div className="space-y-2">
-              <div className="flex items-center justify-between rounded border border-[var(--color-border)] bg-[var(--color-surface)] p-2.5">
-                <div>
-                  <span className="font-mono font-bold text-sm text-[var(--color-primary)] block">
-                    LMV
-                  </span>
-                  <span className="text-[0.6875rem] text-[var(--color-muted)]">
-                    Light Motor Vehicle (Motor Car / Jeep)
-                  </span>
-                </div>
-                <Badge tone="neutral" size="sm">
-                  Issued: {issueDate}
-                </Badge>
+            <div className="space-y-2.5">
+              <div className="flex items-center justify-between p-2 rounded bg-white border border-[var(--color-border-subtle)]">
+                <span className="font-bold text-[var(--color-ink)]">LMV (Light Motor Vehicle - 4 Wheeler)</span>
+                <Badge tone="success" size="sm">Active</Badge>
               </div>
 
-              <div className="rounded border border-dashed border-[var(--color-accent-border)] bg-[var(--color-accent-soft)] p-2 text-[0.6875rem] text-[var(--color-accent-text)] flex items-center justify-between">
-                <span>Requested Endorsement: <strong>MCWG (Two-Wheeler With Gear)</strong></span>
-                <span className="font-bold">Pending Application</span>
+              <div>
+                <span className="text-[0.6875rem] text-[var(--color-muted)] block">Issuing Authority:</span>
+                <span className="font-bold text-[var(--color-ink)] text-sm">{rtoName}</span>
+              </div>
+
+              <div>
+                <span className="text-[0.6875rem] text-[var(--color-muted)] block">Service Requested:</span>
+                <span className="font-bold text-[var(--color-primary)]">
+                  Addition of Class of Vehicle — MCWG (Motorcycle With Gear)
+                </span>
               </div>
             </div>
           </div>
         </div>
 
-        {/* RTO Jurisdiction & Category Confirmation Form */}
-        <div className="border-t border-[var(--color-border)] pt-5 space-y-4">
-          <div className="grid gap-4 sm:grid-cols-2 text-xs">
-            <div>
-              <label
-                htmlFor="pincode-jurisdiction"
-                className="block text-xs font-bold uppercase tracking-wider text-[var(--color-ink)]"
-              >
-                Current Residential Pincode (Auto-matches RTO)
-              </label>
-              <input
-                id="pincode-jurisdiction"
-                type="text"
-                value={pincode}
-                onChange={(e) => setPincode(e.target.value)}
-                className="mt-1.5 w-full rounded-[var(--radius-sm)] border border-[var(--color-border-strong)] bg-[var(--color-surface)] px-3 py-2 text-sm font-mono text-[var(--color-ink)] focus-visible:border-[var(--color-focus)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-focus)]"
-              />
-              <span className="mt-1 block text-[0.6875rem] text-[var(--color-muted)]">
-                Assigned Jurisdiction: <strong className="text-[var(--color-ink)]">{rtoName}</strong>
-              </span>
-            </div>
+        {/* Confirmation Checkbox */}
+        <div className="p-4 rounded-[var(--radius-sm)] bg-slate-50 border border-slate-200">
+          <label className="flex items-start gap-3 cursor-pointer select-none">
+            <input
+              type="checkbox"
+              checked={isConfirmed}
+              onChange={(e) => {
+                setIsConfirmed(e.target.checked);
+                if (e.target.checked) setError(null);
+              }}
+              className="checkbox checkbox-primary checkbox-sm mt-0.5"
+            />
+            <span className="text-xs text-[var(--color-text)] font-medium leading-relaxed">
+              I confirm that the above driving licence details belong to me and I am applying for an additional class endorsement (MCWG) under the jurisdiction of <strong>{rtoName}</strong>.
+            </span>
+          </label>
+        </div>
 
-            <div>
-              <label
-                htmlFor="holder-category"
-                className="block text-xs font-bold uppercase tracking-wider text-[var(--color-ink)]"
-              >
-                Applicant Category
-              </label>
-              <select
-                id="holder-category"
-                value={holderCategory}
-                onChange={(e) => setHolderCategory(e.target.value)}
-                className="mt-1.5 w-full rounded-[var(--radius-sm)] border border-[var(--color-border-strong)] bg-[var(--color-surface)] px-3 py-2 text-sm text-[var(--color-ink)] focus-visible:border-[var(--color-focus)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-focus)]"
-              >
-                <option value="general">General Public</option>
-                <option value="ex_servicemen">Ex-Servicemen</option>
-                <option value="physically_challenged">Physically Challenged (Adapted Vehicle)</option>
-                <option value="diplomat">Diplomat / Foreign National</option>
-              </select>
-              <span className="mt-1 block text-[0.6875rem] text-[var(--color-muted)]">
-                Statutory concessions apply automatically based on category.
-              </span>
-            </div>
-          </div>
+        {error && <Alert type="error">{error}</Alert>}
 
-          {/* Simple Clean Confirmation Checkbox (replaces clunky YES/NO dropdown) */}
-          <div className="rounded-[var(--radius-sm)] border border-[var(--color-border)] bg-[var(--color-surface-subtle)] p-3.5">
-            <label className="flex items-start gap-3 cursor-pointer">
-              <input
-                type="checkbox"
-                checked={isConfirmed}
-                onChange={(e) => setIsConfirmed(e.target.checked)}
-                className="mt-0.5 size-4 rounded border-[var(--color-border-strong)] text-[var(--color-primary)] focus:ring-[var(--color-primary)]"
-              />
-              <div className="text-xs">
-                <span className="font-bold text-[var(--color-ink)] block">
-                  I confirm that the above Driving Licence details are mine and accurate.
-                </span>
-                <span className="text-[var(--color-muted)] text-[0.6875rem] block mt-0.5">
-                  Your application will be mapped to {rtoName} for automated driving track evaluation.
-                </span>
-              </div>
-            </label>
-          </div>
+        {/* Action Footer */}
+        <div className="pt-4 border-t border-[var(--color-border)] flex flex-col sm:flex-row items-center justify-between gap-4">
+          <Button
+            variant="secondary"
+            size="md"
+            onClick={onBack}
+            className="w-full sm:w-auto text-xs"
+          >
+            ← Back to DL Lookup
+          </Button>
 
-          {error ? (
-            <div
-              role="alert"
-              aria-live="assertive"
-              className="rounded-[var(--radius-xs)] bg-[var(--color-danger-soft)] p-3 text-xs font-semibold text-[var(--color-danger-text)] border border-[var(--color-danger-border)]"
-            >
-              {error}
-            </div>
-          ) : null}
-
-          {/* Action Buttons */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-t border-[var(--color-border)] pt-4">
-            <Button variant="secondary" size="md" onClick={onBack}>
-              ← Back to DL Entry
-            </Button>
-
-            <Button
-              variant="primary"
-              size="md"
-              rightIcon={<ArrowRightIcon size="sm" />}
-              onClick={handleProceed}
-              className="font-bold shadow-sm"
-            >
-              Confirm Particulars & Verify Address
-            </Button>
-          </div>
+          <Button
+            variant="primary"
+            size="lg"
+            rightIcon={<ArrowRightIcon size="md" />}
+            onClick={handleProceed}
+            className="w-full sm:w-auto font-black shadow-md bg-[var(--color-primary)] text-sm sm:text-base py-3 px-8"
+          >
+            Confirm Details &amp; Proceed to Address
+          </Button>
         </div>
       </Card>
     </div>

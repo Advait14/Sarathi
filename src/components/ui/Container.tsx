@@ -9,10 +9,10 @@ export type ContainerProps = HTMLAttributes<HTMLDivElement> & {
 };
 
 const sizeClasses: Record<ContainerSize, string> = {
-  narrow: "max-w-2xl",
-  content: "max-w-3xl",
-  wide: "max-w-5xl",
-  full: "max-w-7xl",
+  narrow: "max-w-4xl",
+  content: "max-w-6xl",
+  wide: "max-w-[1600px]",
+  full: "w-full",
 };
 
 export function Container({
@@ -24,7 +24,7 @@ export function Container({
 }: ContainerProps) {
   return (
     <Component
-      className={`mx-auto w-full px-4 sm:px-6 lg:px-8 ${sizeClasses[size]} ${className}`}
+      className={`mx-auto w-full px-4 sm:px-8 lg:px-12 xl:px-16 ${sizeClasses[size]} ${className}`}
       {...props}
     >
       {children}

@@ -846,11 +846,11 @@ export const UNIFIED_SCENARIOS: Record<string, UnifiedJourneyState> = {
         detail: "Arrive 15 minutes before slot with your MCWG two-wheeler and ISI helmet.",
       },
       whatINeedToDo: {
-        actionTitle: "Review Test Day Instructions",
+        actionTitle: "Attend Driving Skill Test",
         instructions:
-          "Download your appointment slip, bring your original RC and insurance, and wear an ISI helmet.",
-        primaryCtaText: "Download Appointment Slip (PDF)",
-        actionKey: "download_slip",
+          "Arrive at RTO Janakpuri Track with your vehicle. After completing the automated test, view live sensor results and update your licence endorsement.",
+        primaryCtaText: "Take Driving Test & View Results",
+        actionKey: "take_driving_test",
       },
       whatHappensNext:
         "Upon passing the automated sensor track test, your driving licence will be updated with MCWG.",

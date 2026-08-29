@@ -9,7 +9,6 @@ import {
   ArrowRightIcon,
   CheckIcon,
   FileTextIcon,
-  InfoIcon,
 } from "@/components/ui/Icons";
 import type { PortalServiceItem, StateRecord } from "@/data/portalEntry";
 
@@ -38,23 +37,23 @@ export function Step9ApplicationReferenceSlip({
   const rtoName = isPriya ? "ARTO Reasi, DC Office (JK-20)" : "RTO Janakpuri, West Delhi (DL-04)";
 
   return (
-    <div className="w-full space-y-6">
+    <div className="w-full space-y-6 animate-in fade-in duration-300">
       {/* Header */}
       <div className="border-b border-[var(--color-border)] pb-6 pt-2">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <Badge tone="success" icon={<CheckIcon size="sm" />}>
-            Step 9 of 10 · Application Generated
+            Application Registered
           </Badge>
-          <span className="text-xs font-mono font-bold text-[var(--color-ink)]">
-            Reference: {appNumber}
+          <span className="font-mono text-xs font-bold text-[var(--color-ink)]">
+            Ref: {appNumber}
           </span>
         </div>
 
-        <Heading as="h1" className="mt-3" variant="title">
-          Application Reference Details & Acknowledgement
+        <Heading as="h1" className="mt-3 text-2xl sm:text-3xl font-black text-[var(--color-ink)] tracking-tight">
+          Application Reference Details &amp; Acknowledgement
         </Heading>
 
-        <Text className="mt-1.5 text-sm text-[var(--color-text)] max-w-2xl" variant="body">
+        <Text className="mt-1.5 text-sm text-[var(--color-text)] max-w-2xl">
           Your Form 2 application for MCWG endorsement has been officially registered with the Ministry of Road Transport and Highways.
         </Text>
       </div>
@@ -62,13 +61,13 @@ export function Step9ApplicationReferenceSlip({
       {/* Main Acknowledgement Slip Card */}
       <Card padding="lg" className="bg-[var(--color-surface)] shadow-card space-y-6">
         {/* Top Success Banner */}
-        <div className="flex flex-wrap items-center justify-between gap-4 rounded-[var(--radius-sm)] border-2 border-[var(--color-success-border)] bg-[var(--color-success-soft)] p-5">
+        <div className="flex flex-wrap items-center justify-between gap-4 rounded-[var(--radius-sm)] border-2 border-emerald-500 bg-emerald-50/80 p-5">
           <div className="flex items-center gap-3">
-            <div className="flex size-10 items-center justify-center rounded-full bg-[var(--color-success-text)] text-white text-base font-bold">
+            <div className="flex size-10 items-center justify-center rounded-full bg-emerald-600 text-white text-base font-bold shadow-xs">
               ✓
             </div>
             <div>
-              <span className="text-xs font-bold text-[var(--color-success-text)] block">
+              <span className="text-xs font-bold text-emerald-800 block">
                 Form 2 Endorsement Application Generated
               </span>
               <span className="text-lg font-mono font-bold text-[var(--color-ink)]">
@@ -114,9 +113,9 @@ export function Step9ApplicationReferenceSlip({
 
               <div>
                 <span className="text-[0.6875rem] font-bold uppercase tracking-wider text-[var(--color-muted)] block">
-                  Date of Birth & Blood Group
+                  Date of Birth &amp; Blood Group
                 </span>
-                <span className="font-mono font-bold text-[var(--color-ink)]">{dob} · {bloodGroup}</span>
+                <span className="font-mono font-bold text-[var(--color-ink)]">{dob || "15/08/1995"} · {bloodGroup}</span>
               </div>
 
               <div className="sm:col-span-2 pt-2 border-t border-[var(--color-border-subtle)]">
@@ -127,84 +126,59 @@ export function Step9ApplicationReferenceSlip({
               </div>
             </div>
 
-            {/* Services Requested & Document Proof Box */}
-            <div className="rounded-[var(--radius-sm)] border border-[var(--color-border)] bg-[var(--color-surface)] p-4 text-xs space-y-2">
-              <span className="font-bold uppercase tracking-wider text-[var(--color-muted)] text-[0.6875rem] block">
-                Services Requested & Verification Record:
+            {/* Services Requested */}
+            <div className="rounded-[var(--radius-sm)] border border-[var(--color-border)] bg-white p-4 space-y-2 text-xs">
+              <span className="text-[0.6875rem] font-bold uppercase tracking-wider text-[var(--color-muted)] block">
+                Services Registered Under This Application:
               </span>
-
-              <div className="flex items-center justify-between border-b border-[var(--color-border-subtle)] pb-2">
-                <span>1. Additional Endorsement to DL (MCWG - Two-Wheeler)</span>
-                <Badge tone="success" size="sm">
-                  Active
-                </Badge>
-              </div>
-
-              <div className="flex items-center gap-2 text-[var(--color-success-text)] pt-1 text-[0.6875rem] font-semibold">
-                <CheckIcon size="sm" />
-                <span>Identity and documents verified via contactless Aadhaar e-KYC</span>
+              <div className="flex items-center justify-between p-2 rounded bg-slate-50 border border-slate-200">
+                <span className="font-bold text-[var(--color-ink)]">
+                  Addition of Class of Vehicle — MCWG (Motorcycle With Gear)
+                </span>
+                <Badge tone="primary" size="sm">Endorsement</Badge>
               </div>
             </div>
           </div>
 
-          {/* Right Column: QR Code & Print Actions */}
-          <div className="flex flex-col items-center justify-center rounded-[var(--radius-sm)] border border-[var(--color-border)] bg-[var(--color-surface-subtle)] p-5 text-center sm:w-48 space-y-3">
-            <div className="size-28 bg-white border border-[var(--color-border)] p-1.5 flex items-center justify-center rounded shadow-sm">
-              {/* Civic QR Simulation */}
-              <div className="size-full bg-[var(--color-ink)]/90 rounded flex items-center justify-center text-white text-[0.625rem] font-mono text-center p-1">
-                QR CODE VERIFIED
-                <br />
-                {appNumber}
-              </div>
+          {/* Quick QR Receipt Box */}
+          <div className="w-full sm:w-48 rounded-[var(--radius-sm)] border border-slate-200 bg-slate-50 p-4 text-center space-y-2">
+            <div className="size-28 mx-auto bg-white border border-slate-300 rounded p-2 flex items-center justify-center font-mono text-[0.6875rem] text-slate-400">
+              [QR VERIFIED]
             </div>
-            <span className="text-[0.625rem] font-mono text-[var(--color-muted)]">
-              Scan for digital verify
+            <span className="text-[0.625rem] font-mono text-[var(--color-muted)] block">
+              Scan on Parivahan App
             </span>
-
-            <div className="w-full space-y-1.5 pt-1">
-              <button
-                type="button"
-                className="w-full text-center rounded bg-white px-2 py-1 text-[0.6875rem] font-semibold text-[var(--color-primary)] border border-[var(--color-border)] hover:bg-[var(--color-surface-subtle)]"
-              >
-                Download Form 2 (PDF)
-              </button>
-              <button
-                type="button"
-                className="w-full text-center rounded bg-white px-2 py-1 text-[0.6875rem] font-semibold text-[var(--color-text)] border border-[var(--color-border)] hover:bg-[var(--color-surface-subtle)]"
-              >
-                Print Acknowledgement
-              </button>
-            </div>
+            <Button
+              variant="secondary"
+              size="sm"
+              leftIcon={<FileTextIcon size="sm" />}
+              onClick={() => alert("Printing Application Acknowledgement Slip...")}
+              className="w-full text-xs font-semibold"
+            >
+              Print Receipt
+            </Button>
           </div>
         </div>
 
-        {/* Clear Action Direction (Replaces contradictory notes) */}
-        <div className="rounded-[var(--radius-sm)] border border-[var(--color-info-border)] bg-[var(--color-info-soft)] p-4 text-xs text-[var(--color-text)] flex items-start gap-3">
-          <InfoIcon size="sm" className="text-[var(--color-info)] mt-0.5 shrink-0" />
-          <div>
-            <span className="font-bold text-[var(--color-info-text)] block">
-              What Happens Next:
-            </span>
-            <p className="mt-0.5 text-xs text-[var(--color-muted)] leading-relaxed">
-              To finalize your endorsement, please proceed to pay the statutory ₹850 government fee online. Once paid, you can select your preferred driving test appointment date at the Janakpuri Automated Test Track.
-            </p>
-          </div>
-        </div>
-
-        {/* Action Controls */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-t border-[var(--color-border)] pt-4">
-          <Button variant="ghost" size="md" onClick={onViewDashboard} className="text-xs">
-            View Journey Roadmap
+        {/* Action Footer */}
+        <div className="pt-4 border-t border-[var(--color-border)] flex flex-col sm:flex-row items-center justify-between gap-4">
+          <Button
+            variant="secondary"
+            size="md"
+            onClick={onViewDashboard}
+            className="w-full sm:w-auto text-xs"
+          >
+            View in Dashboard
           </Button>
 
           <Button
             variant="primary"
-            size="md"
-            rightIcon={<ArrowRightIcon size="sm" />}
+            size="lg"
+            rightIcon={<ArrowRightIcon size="md" />}
             onClick={onProceedToFee}
-            className="font-bold shadow-md"
+            className="w-full sm:w-auto font-black shadow-md bg-[var(--color-primary)] text-sm sm:text-base py-3 px-8"
           >
-            Proceed to Statutory Fee Payment (₹850)
+            Pay Statutory Fee (₹850) →
           </Button>
         </div>
       </Card>

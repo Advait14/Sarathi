@@ -94,10 +94,10 @@
       "status": "action_available",
       "officialPortalStatus": "LICENCE ENDORSED AND DISPATCHED",
       "submissionDate": "2026-08-20T10:30:00.000Z",
-      "lastUpdated": "2026-08-28T04:13:32.429Z",
+      "lastUpdated": "2026-08-29T15:55:23.228Z",
       "feePaid": true,
       "feeAmount": 850,
-      "feeTransactionId": "TXN-90412429",
+      "feeTransactionId": "TXN-18923228",
       "appointment": {
         "isBooked": false,
         "date": null,
@@ -140,16 +140,106 @@
           "action": "Statutory Fee Paid (₹850)",
           "actor": "Citizen (Advait Sharma)",
           "details": "Online payment completed via simulated gateway. Ref: TXN-90412429"
+        },
+        {
+          "timestamp": "2026-08-29T11:46:37.736Z",
+          "action": "Statutory Fee Paid (₹850)",
+          "actor": "Citizen (Advait Sharma)",
+          "details": "Online payment completed via simulated gateway. Ref: TXN-03997736"
+        },
+        {
+          "timestamp": "2026-08-29T14:19:15.711Z",
+          "action": "Statutory Fee Paid (₹850)",
+          "actor": "Citizen (Advait Sharma)",
+          "details": "Online payment completed via simulated gateway. Ref: TXN-13155711"
+        },
+        {
+          "timestamp": "2026-08-29T14:26:48.838Z",
+          "action": "Statutory Fee Paid (₹850)",
+          "actor": "Citizen (Advait Sharma)",
+          "details": "Online payment completed via simulated gateway. Ref: TXN-13608838"
+        },
+        {
+          "timestamp": "2026-08-29T14:36:05.746Z",
+          "action": "Statutory Fee Paid (₹850)",
+          "actor": "Citizen (Advait Sharma)",
+          "details": "Online payment completed via simulated gateway. Ref: TXN-14165746"
+        },
+        {
+          "timestamp": "2026-08-29T14:38:59.915Z",
+          "action": "Statutory Fee Paid (₹850)",
+          "actor": "Citizen (Advait Sharma)",
+          "details": "Online payment completed via simulated gateway. Ref: TXN-14339915"
+        },
+        {
+          "timestamp": "2026-08-29T14:55:09.493Z",
+          "action": "Statutory Fee Paid (₹850)",
+          "actor": "Citizen (Advait Sharma)",
+          "details": "Online payment completed via simulated gateway. Ref: TXN-15309493"
+        },
+        {
+          "timestamp": "2026-08-29T15:01:38.687Z",
+          "action": "Statutory Fee Paid (₹850)",
+          "actor": "Citizen (Advait Sharma)",
+          "details": "Online payment completed via simulated gateway. Ref: TXN-15698687"
+        },
+        {
+          "timestamp": "2026-08-29T15:05:23.976Z",
+          "action": "Statutory Fee Paid (₹850)",
+          "actor": "Citizen (Advait Sharma)",
+          "details": "Online payment completed via simulated gateway. Ref: TXN-15923976"
+        },
+        {
+          "timestamp": "2026-08-29T15:28:03.646Z",
+          "action": "Statutory Fee Paid (₹850)",
+          "actor": "Citizen (Advait Sharma)",
+          "details": "Online payment completed via simulated gateway. Ref: TXN-17283646"
+        },
+        {
+          "timestamp": "2026-08-29T15:29:47.919Z",
+          "action": "Statutory Fee Paid (₹850)",
+          "actor": "Citizen (Advait Sharma)",
+          "details": "Online payment completed via simulated gateway. Ref: TXN-17387919"
+        },
+        {
+          "timestamp": "2026-08-29T15:35:56.350Z",
+          "action": "Statutory Fee Paid (₹850)",
+          "actor": "Citizen (Advait Sharma)",
+          "details": "Online payment completed via simulated gateway. Ref: TXN-17756350"
+        },
+        {
+          "timestamp": "2026-08-29T15:36:19.389Z",
+          "action": "Statutory Fee Paid (₹850)",
+          "actor": "Citizen (Advait Sharma)",
+          "details": "Online payment completed via simulated gateway. Ref: TXN-17779389"
+        },
+        {
+          "timestamp": "2026-08-29T15:42:50.316Z",
+          "action": "Statutory Fee Paid (₹850)",
+          "actor": "Citizen (Advait Sharma)",
+          "details": "Online payment completed via simulated gateway. Ref: TXN-18170316"
+        },
+        {
+          "timestamp": "2026-08-29T15:53:17.104Z",
+          "action": "Statutory Fee Paid (₹850)",
+          "actor": "Citizen (Advait Sharma)",
+          "details": "Online payment completed via simulated gateway. Ref: TXN-18797104"
+        },
+        {
+          "timestamp": "2026-08-29T15:55:23.228Z",
+          "action": "Statutory Fee Paid (₹850)",
+          "actor": "Citizen (Advait Sharma)",
+          "details": "Online payment completed via simulated gateway. Ref: TXN-18923228"
         }
       ]
     }
   ],
   "sessions": [
     {
-      "token": "sess_usr_advait_01_1787890387778_5c7pfnv",
+      "token": "sess_usr_advait_01_1788019017430_4dbdco5",
       "userId": "usr_advait_01",
-      "createdAt": "2026-08-28T04:13:07.778Z",
-      "expiresAt": "2026-09-27T04:13:07.778Z"
+      "createdAt": "2026-08-29T15:56:57.430Z",
+      "expiresAt": "2026-09-28T15:56:57.430Z"
     }
   ]
 }

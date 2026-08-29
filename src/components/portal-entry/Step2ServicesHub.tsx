@@ -1,6 +1,5 @@
 "use client";
 
-import { useState, useMemo } from "react";
 import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
@@ -9,7 +8,6 @@ import {
   ShieldIcon,
   ArrowRightIcon,
   CheckIcon,
-  FileTextIcon,
 } from "@/components/ui/Icons";
 import {
   PORTAL_SERVICES,
@@ -29,36 +27,21 @@ export function Step2ServicesHub({
   onBack,
   onNext,
   onSelectService,
-  selectedService,
   selectedState,
 }: Step2ServicesHubProps) {
-  const [searchQuery, setSearchQuery] = useState("");
-  const [activeCategory, setActiveCategory] = useState<string>("all");
+  const handleServiceClick = (service: PortalServiceItem) => {
+    // Only Additional Endorsement to DL is active and functional
+    if (service.id === "add_endorsement_mcwg") {
+      onSelectService(service);
+      onNext();
+    }
+  };
 
-  const categories = [
-    { key: "all", label: "All Services (18)" },
-    { key: "endorsement", label: "Licence Endorsements & Classes" },
-    { key: "extract", label: "DL Extract & Records" },
-    { key: "renewal", label: "Renewals & Changes" },
-    { key: "applications", label: "Applications & Tracking" },
-  ];
-
-  const filteredServices = useMemo(() => {
-    return PORTAL_SERVICES.filter((item) => {
-      const matchesCategory =
-        activeCategory === "all" || item.category === activeCategory;
-      const q = searchQuery.toLowerCase().trim();
-      const matchesQuery =
-        !q ||
-        item.title.toLowerCase().includes(q) ||
-        item.shortDescription.toLowerCase().includes(q) ||
-        item.tag.toLowerCase().includes(q);
-      return matchesCategory && matchesQuery;
-    });
-  }, [activeCategory, searchQuery]);
+  const featuredService = PORTAL_SERVICES.find((s) => s.id === "add_endorsement_mcwg") || PORTAL_SERVICES[0];
+  const otherServices = PORTAL_SERVICES.filter((s) => s.id !== "add_endorsement_mcwg");
 
   return (
-    <div className="w-full space-y-6">
+    <div className="w-full space-y-8 animate-in fade-in duration-300">
       {/* Header */}
       <div className="border-b border-[var(--color-border)] pb-6 pt-2">
         <div className="flex flex-wrap items-center justify-between gap-3">
@@ -72,151 +55,117 @@ export function Step2ServicesHub({
               ← Change State
             </Button>
             <Badge tone="primary" icon={<ShieldIcon size="sm" />}>
-              Step 2 of 4 · Services Hub
+              Services Directory
             </Badge>
           </div>
-          <span className="text-xs font-bold text-[var(--color-ink)]">
-            Transport Dept · {selectedState.name}
+          <span className="badge badge-outline badge-md font-bold text-[var(--color-ink)]">
+            {selectedState.name} ({selectedState.code})
           </span>
         </div>
 
-        <Heading as="h1" className="mt-3" variant="title">
+        <Heading as="h1" className="mt-3 text-2xl sm:text-3xl font-black text-[var(--color-ink)] tracking-tight">
           Driving Licence Services Directory
         </Heading>
 
-        <Text className="mt-1.5 text-sm text-[var(--color-text)] max-w-2xl" variant="body">
-          Select the service you wish to apply for. Services are structured by category to eliminate guesswork.
+        <Text className="mt-1.5 text-sm text-[var(--color-text)] max-w-2xl">
+          Select the service you wish to apply for in {selectedState.name}. Your primary vehicle class endorsement flow is highlighted below.
         </Text>
       </div>
 
-      {/* Search & Category Filter Controls */}
+      {/* 1. Primary Highlighted Service (Task-Based Selection Hero) */}
       <div className="space-y-3">
-        {/* Search Bar */}
-        <div>
-          <label htmlFor="service-search-input" className="sr-only">
-            Search services
-          </label>
-          <input
-            id="service-search-input"
-            type="text"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search by keyword (e.g. MCWG, Endorsement, Extract, Renewal, Address)..."
-            className="w-full rounded-[var(--radius-sm)] border border-[var(--color-border-strong)] bg-[var(--color-surface)] px-4 py-2.5 text-sm text-[var(--color-ink)] focus-visible:border-[var(--color-focus)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-focus)]"
-          />
-        </div>
+        <span className="text-xs font-bold uppercase tracking-wider text-[var(--color-muted)] block">
+          Recommended Service for Licence Holders:
+        </span>
 
-        {/* Category Pills */}
-        <div className="flex flex-wrap gap-1.5">
-          {categories.map((cat) => {
-            const isSelected = activeCategory === cat.key;
-            return (
-              <button
-                key={cat.key}
-                type="button"
-                onClick={() => setActiveCategory(cat.key)}
-                className={`rounded-full px-3 py-1 text-xs font-semibold transition-all ${
-                  isSelected
-                    ? "bg-[var(--color-primary)] text-white shadow-sm"
-                    : "bg-[var(--color-surface-subtle)] text-[var(--color-text)] border border-[var(--color-border)] hover:bg-[var(--color-surface-muted)]"
-                }`}
+        <Card
+          padding="lg"
+          onClick={() => handleServiceClick(featuredService)}
+          className="border-2 border-[var(--color-primary)] bg-gradient-to-r from-blue-50/70 via-white to-indigo-50/40 hover:shadow-xl hover:border-blue-700 transition-all cursor-pointer ring-4 ring-blue-100/60 p-6 sm:p-8 relative overflow-hidden"
+        >
+          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 relative z-10">
+            <div className="space-y-2 max-w-3xl">
+              <div className="flex flex-wrap items-center gap-2">
+                <Badge tone="primary" className="font-bold">
+                  ★ Active Endorsement Flow
+                </Badge>
+                <span className="badge badge-success badge-sm font-semibold gap-1">
+                  <CheckIcon size="sm" />
+                  Instant Online Processing
+                </span>
+              </div>
+
+              <Heading as="h2" className="text-xl sm:text-2xl font-black text-[var(--color-ink)]">
+                {featuredService.title}
+              </Heading>
+
+              <Text className="text-sm text-slate-700 leading-relaxed">
+                Add Motorcycle With Gear (MCWG / Two-Wheeler) to your existing LMV driving licence with smart DL lookup, pre-flight eligibility check, fee payment, and automated test slot scheduling.
+              </Text>
+            </div>
+
+            <div className="shrink-0 flex items-center gap-3">
+              <Button
+                variant="primary"
+                size="lg"
+                rightIcon={<ArrowRightIcon size="md" />}
+                onClick={() => handleServiceClick(featuredService)}
+                className="w-full sm:w-auto font-black shadow-md bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white text-sm sm:text-base py-3 px-6"
               >
-                {cat.label}
-              </button>
-            );
-          })}
-        </div>
+                Apply Online →
+              </Button>
+            </div>
+          </div>
+        </Card>
       </div>
 
-      {/* Services Grid */}
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {filteredServices.map((service) => {
-          const isSelected = selectedService.id === service.id;
-          return (
+      {/* 2. Secondary Services Directory Grid */}
+      <div className="space-y-3 pt-2">
+        <span className="text-xs font-bold uppercase tracking-wider text-[var(--color-muted)] block">
+          All Other Citizen Transport Services:
+        </span>
+
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {otherServices.map((service) => (
             <Card
               key={service.id}
               padding="md"
-              onClick={() => onSelectService(service)}
-              className={`flex flex-col justify-between cursor-pointer transition-all ${
-                isSelected
-                  ? "border-2 border-[var(--color-primary)] bg-[var(--color-primary-soft)] ring-2 ring-[var(--color-primary-soft)] shadow-md"
-                  : service.highlight
-                  ? "border-2 border-[var(--color-accent-border)] bg-[var(--color-surface)] hover:border-[var(--color-accent)] hover:shadow-sm"
-                  : "border border-[var(--color-border)] bg-[var(--color-surface)] hover:border-[var(--color-border-strong)] hover:bg-[var(--color-surface-subtle)]"
-              }`}
+              className="bg-[var(--color-surface)] border border-[var(--color-border)] hover:border-[var(--color-border-strong)] transition-all flex flex-col justify-between"
             >
-              <div>
+              <div className="space-y-2">
                 <div className="flex items-center justify-between gap-2">
-                  <Badge
-                    tone={
-                      service.highlight
-                        ? "primary"
-                        : service.popular
-                        ? "success"
-                        : "neutral"
-                    }
-                    size="sm"
-                  >
-                    {service.tag}
+                  <Badge tone="neutral" size="sm">
+                    {service.category}
                   </Badge>
-                  {service.formCode ? (
-                    <span className="text-[0.625rem] font-mono font-bold text-[var(--color-muted)] uppercase">
-                      {service.formCode}
-                    </span>
-                  ) : null}
+                  <span className="badge badge-ghost badge-xs text-[0.625rem] uppercase">
+                    Direct Service
+                  </span>
                 </div>
-
-                <Heading
-                  as="h3"
-                  variant="subsection"
-                  className={`mt-2.5 text-sm font-bold leading-snug ${
-                    isSelected ? "text-[var(--color-primary)]" : "text-[var(--color-ink)]"
-                  }`}
-                >
+                <h3 className="text-sm font-bold text-[var(--color-ink)]">
                   {service.title}
-                </Heading>
-
-                <Text className="mt-1.5 text-xs text-[var(--color-muted)] leading-normal">
+                </h3>
+                <p className="text-xs text-[var(--color-muted)] line-clamp-2 leading-relaxed">
                   {service.shortDescription}
-                </Text>
+                </p>
               </div>
 
-              <div className="mt-4 border-t border-[var(--color-border-subtle)] pt-3 flex items-center justify-between text-xs">
-                <span className="font-semibold text-[var(--color-primary)] group-hover:underline">
-                  {isSelected ? "Selected" : "Select Service →"}
+              <div className="mt-4 pt-3 border-t border-[var(--color-border-subtle)] flex items-center justify-between">
+                <span className="text-[0.6875rem] text-[var(--color-muted)]">
+                  Standard RTO Schedule
                 </span>
-                {isSelected ? (
-                  <CheckIcon size="sm" className="text-[var(--color-primary)] stroke-[2.5]" />
-                ) : null}
+                <Button
+                  variant="secondary"
+                  size="sm"
+                  disabled
+                  className="text-xs opacity-60 cursor-not-allowed"
+                >
+                  Coming Soon
+                </Button>
               </div>
             </Card>
-          );
-        })}
-      </div>
-
-      {/* Selected Action Floating Bottom Bar */}
-      <Card padding="md" className="bg-[var(--color-surface)] shadow-card border-l-4 border-l-[var(--color-primary)]">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <div>
-            <span className="text-[0.6875rem] font-bold uppercase tracking-wider text-[var(--color-muted)] block">
-              Proceeding With Service:
-            </span>
-            <p className="text-sm font-bold text-[var(--color-ink)]">
-              {selectedService.title}
-            </p>
-          </div>
-
-          <Button
-            variant="primary"
-            size="md"
-            rightIcon={<ArrowRightIcon size="sm" />}
-            onClick={onNext}
-            className="font-bold shadow-sm"
-          >
-            Continue to Service Instructions
-          </Button>
+          ))}
         </div>
-      </Card>
+      </div>
     </div>
   );
 }

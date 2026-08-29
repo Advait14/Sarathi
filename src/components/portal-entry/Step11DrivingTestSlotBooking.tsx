@@ -5,12 +5,15 @@ import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { Heading, Text } from "@/components/ui/Text";
+import { Alert } from "@/components/ui/Alert";
 import {
   ShieldIcon,
   ArrowRightIcon,
   CheckIcon,
   ClockIcon,
   InfoIcon,
+  FileTextIcon,
+  CalendarIcon,
 } from "@/components/ui/Icons";
 import { useAuth } from "@/context/AuthContext";
 import type { PortalServiceItem, StateRecord } from "@/data/portalEntry";
@@ -22,6 +25,7 @@ export interface Step11DrivingTestSlotBookingProps {
   dob: string;
   onBack: () => void;
   onBookingConfirmed: () => void;
+  onSlotBookedStateChange?: (isBooked: boolean) => void;
 }
 
 export function Step11DrivingTestSlotBooking({
@@ -29,6 +33,7 @@ export function Step11DrivingTestSlotBooking({
   dob,
   onBack,
   onBookingConfirmed,
+  onSlotBookedStateChange,
   selectedService,
   selectedState,
 }: Step11DrivingTestSlotBookingProps) {
@@ -41,6 +46,9 @@ export function Step11DrivingTestSlotBooking({
   const isPriya = dlNumber.includes("99887");
   const holderName = isPriya ? "Priya Verma" : "Advait Sharma";
   const rtoName = isPriya ? "ARTO Reasi Test Track (JK-20)" : "RTO Janakpuri Automated Track (DL-04)";
+  const venueAddress = isPriya
+    ? "ARTO Driving Test Facility, Complex Road, Reasi, Jammu & Kashmir - 182311"
+    : "Automated Driving Test Track (ADTT), RTO Janakpuri, West Delhi, New Delhi - 110058";
 
   const availableDates = [
     { date: "2024-09-16", label: "Mon, 16 Sep", slotsLeft: 18, isRecommended: true },
@@ -80,226 +88,238 @@ export function Step11DrivingTestSlotBooking({
     setTimeout(() => {
       setLoading(false);
       setIsBooked(true);
-    }, 500);
+      if (onSlotBookedStateChange) {
+        onSlotBookedStateChange(true);
+      }
+    }, 400);
   };
 
   return (
-    <div className="w-full space-y-6">
-      {/* Header */}
-      <div className="border-b border-[var(--color-border)] pb-6 pt-2">
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <div className="flex items-center gap-2">
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={onBack}
-              className="text-xs font-semibold text-[var(--color-muted)] hover:text-[var(--color-ink)]"
-            >
-              ← Fee Payment
-            </Button>
-            <Badge tone="primary" icon={<ClockIcon size="sm" />}>
-              Step 11 of 11 · Driving Test Appointment
-            </Badge>
-          </div>
-          <span className="text-xs font-bold text-[var(--color-ink)]">
-            Automated Sensor Test Track (ADTT)
-          </span>
-        </div>
-
-        <Heading as="h1" className="mt-3" variant="title">
-          Book Driving Test Appointment Slot
-        </Heading>
-
-        <Text className="mt-1.5 text-sm text-[var(--color-text)] max-w-2xl" variant="body">
-          Select your preferred appointment date and time slot for the Motorcycle With Gear (MCWG) practical driving skill evaluation.
-        </Text>
-      </div>
-
+    <div className="w-full space-y-6 animate-in fade-in duration-300">
       {!isBooked ? (
-        /* Slot Selection Form Card */
-        <Card padding="lg" className="bg-[var(--color-surface)] shadow-card space-y-6">
-          {/* Test Track Location Info Banner */}
-          <div className="flex flex-wrap items-center justify-between gap-3 rounded-[var(--radius-sm)] border border-[var(--color-primary-border)] bg-[var(--color-primary-soft)] p-4 text-xs">
-            <div>
-              <span className="text-[0.6875rem] font-bold uppercase tracking-wider text-[var(--color-muted)] block">
-                Testing Track Location
-              </span>
-              <span className="text-sm font-bold text-[var(--color-ink)]">{rtoName}</span>
-              <span className="text-[0.6875rem] text-[var(--color-muted)] block mt-0.5">
-                Automated Sensor Track · Figure-8 & Gradient Hill Evaluation
+        <>
+          {/* Header for Slot Selection */}
+          <div className="border-b border-[var(--color-border)] pb-6 pt-2">
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <div className="flex items-center gap-2">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={onBack}
+                  className="text-xs font-semibold text-[var(--color-muted)] hover:text-[var(--color-ink)]"
+                >
+                  ← Fee Payment
+                </Button>
+                <Badge tone="primary" icon={<ClockIcon size="sm" />}>
+                  Driving Test Appointment
+                </Badge>
+              </div>
+              <span className="badge badge-outline badge-md font-bold text-[var(--color-ink)]">
+                Automated Test Track (ADTT)
               </span>
             </div>
 
-            <Badge tone="success" size="sm" icon={<CheckIcon size="sm" />}>
-              Fee Paid (₹850)
-            </Badge>
+            <Heading as="h1" className="mt-3 text-2xl sm:text-3xl font-black text-[var(--color-ink)] tracking-tight">
+              Book Driving Test Appointment Slot
+            </Heading>
+
+            <Text className="mt-1.5 text-sm text-[var(--color-text)] max-w-2xl">
+              Select your preferred appointment date and time slot for the Motorcycle With Gear (MCWG) practical driving skill evaluation.
+            </Text>
           </div>
 
-          <form onSubmit={handleBook} className="space-y-6">
-            {/* 1. Date Picker */}
-            <div className="space-y-2.5">
-              <span className="text-xs font-bold uppercase tracking-wider text-[var(--color-ink)] block">
-                Select Test Appointment Date:
+          {/* Slot Selection Form Card */}
+          <Card padding="lg" className="bg-[var(--color-surface)] shadow-card space-y-6">
+            {/* Venue & Track Details */}
+            <div className="rounded-[var(--radius-sm)] border border-[var(--color-border)] bg-[var(--color-surface-subtle)] p-4 text-xs space-y-1">
+              <span className="font-bold uppercase tracking-wider text-[var(--color-muted)] text-[0.6875rem] block">
+                Testing Track Venue:
+              </span>
+              <p className="font-bold text-sm text-[var(--color-ink)]">{rtoName}</p>
+              <p className="text-[var(--color-muted)]">{venueAddress}</p>
+            </div>
+
+            {/* Date Selection */}
+            <div className="space-y-3">
+              <span className="text-xs font-bold uppercase tracking-wider text-[var(--color-ink)] block flex items-center gap-1.5">
+                <CalendarIcon size="sm" className="text-[var(--color-primary)]" />
+                1. Select Test Date:
               </span>
 
-              <div className="grid grid-cols-2 sm:grid-cols-5 gap-2.5">
-                {availableDates.map((item) => {
-                  const isSelected = selectedDate === item.date;
-                  return (
-                    <button
-                      key={item.date}
-                      type="button"
-                      onClick={() => setSelectedDate(item.date)}
-                      className={`rounded-[var(--radius-sm)] border p-3 text-center transition-all ${
-                        isSelected
-                          ? "border-2 border-[var(--color-primary)] bg-[var(--color-primary-soft)] ring-2 ring-[var(--color-primary-soft)] shadow-sm"
-                          : "border-[var(--color-border)] bg-[var(--color-surface)] hover:bg-[var(--color-surface-subtle)]"
-                      }`}
-                    >
-                      <span className="text-xs font-bold text-[var(--color-ink)] block">
-                        {item.label}
-                      </span>
-                      <span className="text-[0.625rem] text-[var(--color-success-text)] font-semibold mt-1 block">
-                        {item.slotsLeft} Slots Left
-                      </span>
-                    </button>
-                  );
-                })}
+              <div className="grid gap-2 sm:grid-cols-5">
+                {availableDates.map((item) => (
+                  <button
+                    key={item.date}
+                    type="button"
+                    onClick={() => setSelectedDate(item.date)}
+                    className={`rounded border p-3 text-center transition-all ${
+                      selectedDate === item.date
+                        ? "border-2 border-[var(--color-primary)] bg-[var(--color-primary-soft)] ring-2 ring-[var(--color-primary-soft)]"
+                        : "border-[var(--color-border)] bg-white hover:bg-slate-50"
+                    }`}
+                  >
+                    <span className="text-xs font-bold text-[var(--color-ink)] block">
+                      {item.label}
+                    </span>
+                    <span className="text-[0.625rem] text-emerald-700 font-semibold block mt-0.5">
+                      {item.slotsLeft} slots open
+                    </span>
+                  </button>
+                ))}
               </div>
             </div>
 
-            {/* 2. Time Slot Selector */}
-            <div className="space-y-2.5">
-              <span className="text-xs font-bold uppercase tracking-wider text-[var(--color-ink)] block">
-                Select Time Window:
+            {/* Time Slot Selection */}
+            <div className="space-y-3">
+              <span className="text-xs font-bold uppercase tracking-wider text-[var(--color-ink)] block flex items-center gap-1.5">
+                <ClockIcon size="sm" className="text-[var(--color-primary)]" />
+                2. Select Time Window:
               </span>
 
-              <div className="grid sm:grid-cols-3 gap-3">
-                {timeSlots.map((slot) => {
-                  const isSelected = selectedSlot === slot.time;
-                  return (
-                    <button
-                      key={slot.time}
-                      type="button"
-                      onClick={() => setSelectedSlot(slot.time)}
-                      className={`rounded-[var(--radius-sm)] border p-3.5 text-left transition-all ${
-                        isSelected
-                          ? "border-2 border-[var(--color-primary)] bg-[var(--color-primary-soft)] ring-2 ring-[var(--color-primary-soft)] shadow-sm"
-                          : "border-[var(--color-border)] bg-[var(--color-surface)] hover:bg-[var(--color-surface-subtle)]"
-                      }`}
-                    >
-                      <div className="flex items-center justify-between">
-                        <span className="font-bold text-xs text-[var(--color-ink)]">
-                          {slot.time}
-                        </span>
-                        {slot.recommended ? (
-                          <Badge tone="primary" size="sm">
-                            Optimal
-                          </Badge>
-                        ) : null}
-                      </div>
-                      <span className="text-[0.6875rem] text-[var(--color-muted)] block mt-1">
+              <div className="grid gap-3 sm:grid-cols-3">
+                {timeSlots.map((slot) => (
+                  <button
+                    key={slot.time}
+                    type="button"
+                    onClick={() => setSelectedSlot(slot.time)}
+                    className={`rounded border p-3.5 text-left transition-all ${
+                      selectedSlot === slot.time
+                        ? "border-2 border-[var(--color-primary)] bg-[var(--color-primary-soft)] ring-2 ring-[var(--color-primary-soft)]"
+                        : "border-[var(--color-border)] bg-white hover:bg-slate-50"
+                    }`}
+                  >
+                    <div className="flex items-center justify-between">
+                      <span className="font-bold text-xs text-[var(--color-ink)]">
                         {slot.label}
                       </span>
-                    </button>
-                  );
-                })}
+                      {slot.recommended && (
+                        <span className="badge badge-success badge-xs">Recommended</span>
+                      )}
+                    </div>
+                    <span className="font-mono font-bold text-xs text-[var(--color-primary)] block mt-1">
+                      {slot.time}
+                    </span>
+                  </button>
+                ))}
               </div>
             </div>
 
-            {/* 3. Test Day Checklist Card */}
-            <div className="rounded-[var(--radius-sm)] border border-[var(--color-border)] bg-[var(--color-surface-subtle)] p-4 text-xs space-y-2">
-              <span className="font-bold text-[var(--color-ink)] block">
-                What to Bring on Driving Test Day:
-              </span>
-              <ul className="space-y-1 text-[var(--color-muted)] text-[0.6875rem] list-disc pl-4">
-                <li>Your own MCWG vehicle (Motorcycle with manual clutch and foot gears).</li>
-                <li>ISI-certified standard protective motorcycle helmet with chin strap.</li>
-                <li>Original Registration Certificate (RC) &amp; valid vehicle insurance.</li>
-                <li>Original Learner&apos;s Licence copy &amp; printed Appointment Slip.</li>
-              </ul>
-            </div>
-
-            {/* Action Buttons */}
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-3 border-t border-[var(--color-border)]">
-              <Button type="button" variant="secondary" size="md" onClick={onBack}>
-                ← Back to Fee Details
+            {/* Action Footer */}
+            <div className="pt-4 border-t border-[var(--color-border)] flex flex-col sm:flex-row items-center justify-between gap-4">
+              <Button
+                variant="secondary"
+                size="md"
+                onClick={onBack}
+                className="w-full sm:w-auto text-xs"
+              >
+                ← Back to Fee Payment
               </Button>
 
               <Button
-                type="submit"
                 variant="primary"
-                size="md"
+                size="lg"
                 loading={loading}
-                rightIcon={<ArrowRightIcon size="sm" />}
-                className="font-bold shadow-md text-xs sm:text-sm"
+                rightIcon={<ArrowRightIcon size="md" />}
+                onClick={handleBook}
+                className="w-full sm:w-auto font-black shadow-md bg-[var(--color-primary)] text-sm sm:text-base py-3 px-8"
               >
-                Confirm Appointment Slot ({selectedSlot})
+                {loading ? "Confirming Slot..." : "Confirm Driving Test Slot →"}
               </Button>
             </div>
-          </form>
-        </Card>
+          </Card>
+        </>
       ) : (
-        /* Appointment Confirmed Slip */
-        <Card padding="lg" className="bg-[var(--color-surface)] shadow-card space-y-6 border-2 border-[var(--color-success-border)]">
-          <div className="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-[var(--color-success-border)]">
-            <div className="flex items-center gap-3">
-              <div className="flex size-10 items-center justify-center rounded-full bg-[var(--color-success-text)] text-white font-bold">
-                ✓
+        /* Application Completed & Slot Confirmed Overview Card */
+        <div className="space-y-6 animate-in fade-in duration-300">
+          <div className="rounded-[var(--radius-md)] border-2 border-emerald-500 bg-emerald-50/90 p-6 sm:p-8 space-y-6 shadow-md">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-emerald-200 pb-5">
+              <div className="flex items-center gap-3">
+                <div className="size-12 rounded-full bg-emerald-600 text-white flex items-center justify-center font-bold text-xl shadow-xs">
+                  ✓
+                </div>
+                <div>
+                  <h2 className="text-xl sm:text-2xl font-black text-emerald-950">
+                    Application Completed &amp; Appointment Confirmed!
+                  </h2>
+                  <p className="text-xs sm:text-sm text-emerald-800">
+                    Your MCWG endorsement application is filed and your driving test slot is officially reserved.
+                  </p>
+                </div>
+              </div>
+              <Badge tone="success" size="md">
+                Confirmed &amp; Active
+              </Badge>
+            </div>
+
+            {/* Confirmed Appointment Details Grid */}
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4 text-xs bg-white rounded-[var(--radius-sm)] border border-emerald-200 p-4">
+              <div>
+                <span className="text-[0.6875rem] text-[var(--color-muted)] uppercase tracking-wider block">
+                  Test Date
+                </span>
+                <span className="font-bold text-sm text-[var(--color-ink)]">
+                  Mon, 16 Sep 2024
+                </span>
               </div>
               <div>
-                <span className="text-xs font-bold text-[var(--color-success-text)] block">
-                  Driving Test Appointment Confirmed
+                <span className="text-[0.6875rem] text-[var(--color-muted)] uppercase tracking-wider block">
+                  Time Slot
                 </span>
-                <span className="text-base font-bold text-[var(--color-ink)]">
-                  Slot Booked: Mon, 16 Sep 2024 at {selectedSlot}
+                <span className="font-bold text-sm text-[var(--color-primary)]">
+                  {selectedSlot}
+                </span>
+              </div>
+              <div>
+                <span className="text-[0.6875rem] text-[var(--color-muted)] uppercase tracking-wider block">
+                  Candidate
+                </span>
+                <span className="font-bold text-sm text-[var(--color-ink)]">
+                  {holderName}
+                </span>
+              </div>
+              <div>
+                <span className="text-[0.6875rem] text-[var(--color-muted)] uppercase tracking-wider block">
+                  Endorsement Added
+                </span>
+                <span className="font-bold text-sm text-emerald-800">
+                  MCWG (Two-Wheeler)
                 </span>
               </div>
             </div>
 
-            <Badge tone="success" size="sm">
-              Slot Reserved
-            </Badge>
-          </div>
+            {/* Venue Address */}
+            <div className="rounded-[var(--radius-sm)] bg-white border border-emerald-200 p-4 text-xs space-y-1">
+              <span className="font-bold uppercase tracking-wider text-[var(--color-muted)] text-[0.6875rem] block">
+                Please Visit Test Venue on Your Scheduled Date:
+              </span>
+              <p className="font-bold text-sm text-[var(--color-ink)]">{rtoName}</p>
+              <p className="text-[var(--color-muted)]">{venueAddress}</p>
+            </div>
 
-          <div className="grid gap-4 sm:grid-cols-2 text-xs rounded bg-[var(--color-success-soft)] p-4 border border-[var(--color-success-border)]">
-            <div>
-              <span className="text-[0.6875rem] text-[var(--color-muted)] block">Appointment Slip No:</span>
-              <span className="font-mono font-bold text-sm text-[var(--color-ink)]">APT-DL04-2024-9912</span>
-            </div>
-            <div>
-              <span className="text-[0.6875rem] text-[var(--color-muted)] block">Candidate Name:</span>
-              <span className="font-bold text-sm text-[var(--color-ink)]">{holderName} ({dlNumber})</span>
-            </div>
-            <div>
-              <span className="text-[0.6875rem] text-[var(--color-muted)] block">Test Location:</span>
-              <span className="font-semibold text-[var(--color-ink)]">{rtoName}</span>
-            </div>
-            <div>
-              <span className="text-[0.6875rem] text-[var(--color-muted)] block">Vehicle Class Test:</span>
-              <span className="font-mono font-bold text-[var(--color-primary)]">MCWG (Motorcycle With Gear)</span>
+            {/* Action Buttons */}
+            <div className="pt-2 flex flex-col sm:flex-row items-center justify-between gap-4">
+              <Button
+                variant="secondary"
+                size="md"
+                leftIcon={<FileTextIcon size="sm" />}
+                onClick={() => alert("Downloading Appointment Pass (PDF)...")}
+                className="w-full sm:w-auto text-xs font-bold"
+              >
+                Download Appointment Pass
+              </Button>
+
+              <Button
+                variant="primary"
+                size="lg"
+                rightIcon={<ArrowRightIcon size="md" />}
+                onClick={onBookingConfirmed}
+                className="w-full sm:w-auto font-black shadow-md bg-emerald-700 hover:bg-emerald-800 text-white text-sm sm:text-base py-3 px-8"
+              >
+                Continue to Journey Dashboard →
+              </Button>
             </div>
           </div>
-
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-3 border-t border-[var(--color-border)]">
-            <button
-              type="button"
-              className="text-xs font-semibold text-[var(--color-primary)] hover:underline"
-            >
-              ↓ Download Official Appointment Slip (PDF)
-            </button>
-
-            <Button
-              variant="primary"
-              size="md"
-              rightIcon={<ArrowRightIcon size="sm" />}
-              onClick={onBookingConfirmed}
-              className="font-bold shadow-md text-xs sm:text-sm"
-            >
-              View Live Journey Tracking Dashboard
-            </Button>
-          </div>
-        </Card>
+        </div>
       )}
     </div>
   );

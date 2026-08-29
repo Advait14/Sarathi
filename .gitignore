@@ -4,3 +4,8 @@ out/
 .env*
 !.env.example
 *.tsbuildinfo
+.vscode/
+
+# Evaluation and Internal Documentation
+TWO_MINUTE_VIDEO_PITCH_AND_EVALUATION_REPORT.md
+UI_COMPONENTS_AND_ELEMENTS.md

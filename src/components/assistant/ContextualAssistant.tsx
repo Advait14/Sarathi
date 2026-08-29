@@ -7,7 +7,6 @@ import { Heading, Text } from "@/components/ui/Text";
 import {
   ShieldIcon,
   InfoIcon,
-  ArrowRightIcon,
   UserIcon,
 } from "@/components/ui/Icons";
 import {
@@ -97,11 +96,11 @@ export function ContextualAssistant({ activeStateKey }: ContextualAssistantProps
             onClick={() => setIsOpen(true)}
             aria-expanded={false}
             aria-controls="assistant-dialog"
-            className="group flex min-h-11 items-center gap-2.5 rounded-full bg-[var(--color-primary)] px-4 py-3 text-xs font-bold text-white shadow-lg transition-all hover:bg-[var(--color-accent)] hover:shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] focus-visible:ring-offset-2"
+            className="group flex min-h-11 items-center gap-2.5 rounded-full bg-[var(--color-primary)] px-4 py-3 text-xs font-bold text-white shadow-lg transition-all hover:bg-blue-800 hover:shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2 cursor-pointer"
           >
             <ShieldIcon size="sm" className="text-white" />
             <span>Ask Sarathi Guide</span>
-            <span className="rounded-full bg-white/20 px-2 py-0.5 text-[0.625rem] uppercase font-bold tracking-wider">
+            <span className="badge badge-sm badge-secondary text-[0.625rem] uppercase font-bold tracking-wider">
               AI Helper
             </span>
           </button>
@@ -125,7 +124,7 @@ export function ContextualAssistant({ activeStateKey }: ContextualAssistantProps
                 <Heading as="h3" id="assistant-panel-title" variant="section" className="text-white text-sm font-bold">
                   Sarathi AI Guide
                 </Heading>
-                <span className="rounded bg-white/20 px-1.5 py-0.5 text-[0.625rem] font-bold uppercase tracking-wider text-white">
+                <span className="badge badge-xs badge-ghost text-[0.625rem] font-bold uppercase tracking-wider text-white">
                   Prototype
                 </span>
               </div>
@@ -133,12 +132,11 @@ export function ContextualAssistant({ activeStateKey }: ContextualAssistantProps
                 type="button"
                 onClick={() => setIsOpen(false)}
                 aria-label="Close Sarathi AI Guide"
-                className="rounded p-1 text-white/80 hover:bg-white/10 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+                className="btn btn-ghost btn-xs btn-circle text-white hover:bg-white/10"
               >
-                <span className="text-lg font-bold leading-none" aria-hidden="true">&times;</span>
+                ✕
               </button>
             </div>
-
 
             {/* Active Context Indicator */}
             <div className="mt-2 flex items-center gap-1.5 text-[0.6875rem] text-white/90">
@@ -150,15 +148,15 @@ export function ContextualAssistant({ activeStateKey }: ContextualAssistantProps
           </div>
 
           {/* Prototype Disclaimer Banner */}
-          <div className="border-b border-[var(--color-info-border)] bg-[var(--color-info-soft)] px-3 py-1.5 text-[0.625rem] text-[var(--color-info-text)] flex items-center justify-between">
+          <div className="border-b border-blue-200 bg-blue-50 px-3 py-1.5 text-[0.625rem] text-blue-900 flex items-center justify-between">
             <span className="flex items-center gap-1">
-              <InfoIcon size="sm" className="text-[var(--color-info)]" />
+              <InfoIcon size="sm" className="text-blue-700" />
               Explanatory guide only · Grounded in CMVR rules
             </span>
             <button
               type="button"
               onClick={handleClearChat}
-              className="text-[0.625rem] font-semibold text-[var(--color-info-text)] underline hover:opacity-80"
+              className="text-[0.625rem] font-semibold text-blue-800 underline hover:opacity-80 cursor-pointer"
             >
               Clear chat
             </button>
@@ -171,41 +169,31 @@ export function ContextualAssistant({ activeStateKey }: ContextualAssistantProps
             aria-label="Chat conversation history"
             className="flex-1 overflow-y-auto p-4 space-y-3.5 bg-[var(--color-canvas)] text-xs"
           >
-
             {messages.map((msg) => {
               const isUser = msg.sender === "user";
               return (
                 <div
                   key={msg.id}
-                  className={`flex items-start gap-2 ${
-                    isUser ? "flex-row-reverse" : "flex-row"
-                  }`}
+                  className={`chat ${isUser ? "chat-end" : "chat-start"}`}
                 >
-                  <div
-                    className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-[0.625rem] font-bold ${
-                      isUser
-                        ? "bg-[var(--color-accent)] text-white"
-                        : "bg-[var(--color-primary)] text-white"
-                    }`}
-                  >
-                    {isUser ? <UserIcon size="sm" /> : <ShieldIcon size="sm" />}
+                  <div className="chat-image avatar placeholder">
+                    <div className={`size-7 rounded-full text-white text-[0.625rem] font-bold ${
+                      isUser ? "bg-blue-700" : "bg-slate-800"
+                    }`}>
+                      {isUser ? <UserIcon size="sm" /> : <ShieldIcon size="sm" />}
+                    </div>
                   </div>
-
                   <div
-                    className={`max-w-[82%] rounded-[var(--radius-sm)] p-3 text-xs leading-relaxed ${
+                    className={`chat-bubble text-xs leading-relaxed ${
                       isUser
-                        ? "bg-[var(--color-accent)] text-white font-medium"
-                        : "border border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-text)] shadow-sm whitespace-pre-line"
+                        ? "chat-bubble-primary text-white font-medium"
+                        : "bg-white text-[var(--color-text)] border border-slate-200 shadow-xs whitespace-pre-line"
                     }`}
                   >
                     {msg.text}
-                    <div
-                      className={`mt-1 text-[0.5625rem] ${
-                        isUser ? "text-white/70" : "text-[var(--color-muted)]"
-                      } text-right`}
-                    >
-                      {msg.timestamp}
-                    </div>
+                  </div>
+                  <div className="chat-footer opacity-60 text-[0.5625rem] mt-0.5">
+                    {msg.timestamp}
                   </div>
                 </div>
               );
@@ -224,7 +212,7 @@ export function ContextualAssistant({ activeStateKey }: ContextualAssistantProps
                   key={idx}
                   type="button"
                   onClick={() => handleSend(q)}
-                  className="rounded border border-[var(--color-border)] bg-[var(--color-surface)] px-2 py-1 text-[0.6875rem] font-medium text-[var(--color-text)] hover:bg-[var(--color-surface-muted)] hover:border-[var(--color-accent)] transition-colors text-left"
+                  className="badge badge-outline hover:badge-primary text-[0.6875rem] py-2.5 font-medium transition-colors text-left cursor-pointer"
                 >
                   {q}
                 </button>
@@ -246,7 +234,7 @@ export function ContextualAssistant({ activeStateKey }: ContextualAssistantProps
               onChange={(e) => setInputQuery(e.target.value)}
               placeholder="Ask a question about your licence..."
               aria-label="Ask a question about your licence"
-              className="flex-1 rounded-[var(--radius-xs)] border border-[var(--color-border)] bg-[var(--color-surface-subtle)] px-3 py-2 text-xs text-[var(--color-text)] focus:border-[var(--color-accent)] focus:outline-none"
+              className="input input-bordered input-sm flex-1 text-xs"
             />
             <Button
               type="submit"

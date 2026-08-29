@@ -110,6 +110,14 @@ export function ChevronRightIcon(props: IconProps) {
   );
 }
 
+export function ChevronLeftIcon(props: IconProps) {
+  return (
+    <IconWrapper {...props}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+    </IconWrapper>
+  );
+}
+
 export function ShieldIcon(props: IconProps) {
   return (
     <IconWrapper {...props}>
@@ -206,3 +214,89 @@ export function SearchIcon(props: IconProps) {
     </IconWrapper>
   );
 }
+
+export function HeartIcon(props: IconProps) {
+  return (
+    <IconWrapper {...props}>
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
+      />
+    </IconWrapper>
+  );
+}
+
+export function GlobeIcon(props: IconProps) {
+  return (
+    <IconWrapper {...props}>
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M12 21a9 9 0 100-18 9 9 0 000 18zM3.6 9h16.8M3.6 15h16.8M12 3a14.3 14.3 0 013.6 9 14.3 14.3 0 01-3.6 9 14.3 14.3 0 01-3.6-9A14.3 14.3 0 0112 3z"
+      />
+    </IconWrapper>
+  );
+}
+
+export function CalendarIcon(props: IconProps) {
+  return (
+    <IconWrapper {...props}>
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5m-9-6h.008v.008H12v-.008zM12 15h.008v.008H12V15zm0 2.25h.008v.008H12v-.008zM9.75 15h.008v.008H9.75V15zm0 2.25h.008v.008H9.75v-.008zM7.5 15h.008v.008H7.5V15zm0 2.25h.008v.008H7.5v-.008zm6.75-4.5h.008v.008h-.008v-.008zm0 2.25h.008v.008h-.008V15zm0 2.25h.008v.008h-.008v-.008zm2.25-4.5h.008v.008H16.5v-.008zm0 2.25h.008v.008H16.5V15z"
+      />
+    </IconWrapper>
+  );
+}
+
+export function DownloadIcon(props: IconProps) {
+  return (
+    <IconWrapper {...props}>
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"
+      />
+    </IconWrapper>
+  );
+}
+
+export function AwardIcon(props: IconProps) {
+  return (
+    <IconWrapper {...props}>
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M16.5 18.75h-9m9 0a3 3 0 013 3h-15a3 3 0 013-3m9 0v-3.375c0-.621-.504-1.125-1.125-1.125h-.871M7.5 18.75v-3.375c0-.621.504-1.125 1.125-1.125h.872m5.003 0H9.497m5.003 0a3.375 3.375 0 003.375-3.375V6.75A2.25 2.25 0 0015.625 4.5h-7.25A2.25 2.25 0 006.125 6.75v5.25a3.375 3.375 0 003.375 3.375z"
+      />
+    </IconWrapper>
+  );
+}
+
+export function HomeIcon(props: IconProps) {
+  return (
+    <IconWrapper {...props}>
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"
+      />
+    </IconWrapper>
+  );
+}
+
+export function RotateCcwIcon(props: IconProps) {
+  return (
+    <IconWrapper {...props}>
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99"
+      />
+    </IconWrapper>
+  );
+}
+
+
